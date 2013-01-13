@@ -1,0 +1,28 @@
+<html t:type="layout" title="Gestion des pieces"
+      xmlns:t="http://tapestry.apache.org/schema/tapestry_5_3.xsd"
+      xmlns:p="tapestry:parameter">
+
+    
+    <t:zone t:id="zone">
+        <p>
+             <t:grid source="pieces" t:row="piece" add="modifiePiece">
+             
+	            <p:modifiePiececell>
+	                <!-- <t:pagelink page="piece/modifiePiece" >Modifie</t:pagelink> -->
+	                <a t:type="pagelink" t:page="piece/modifiePiece" t:context="piece" href="#">Modifie</a>
+	            </p:modifiePiececell>
+            	<p:empty>
+              		<p>Aucune piece n est presente mais vous pouvez <t:pagelink page="piece/creePiece">ajouter une piece</t:pagelink>.</p>
+            	</p:empty>
+            </t:grid>
+        </p>
+        
+        <p>
+            [
+            <t:pagelink page="piece/creePiece">Cree une piece</t:pagelink>
+            ]
+        </p>
+
+    </t:zone>
+
+</html>
