@@ -1,0 +1,27 @@
+<html t:type="layout" title="Gestion des clients"
+      xmlns:t="http://tapestry.apache.org/schema/tapestry_5_3.xsd"
+      xmlns:p="tapestry:parameter">
+
+    
+    <t:zone t:id="zone">
+        <p>
+             <t:grid source="clients" t:row="client" add="modifieClient" reorder="nom,rue, ville, codePostal,modifieClient">
+             
+	            <p:modifieClientcell>	                
+	                <a t:type="pagelink" t:page="client/creeModifierClient" t:context="client" href="#">Modifie</a>
+	            </p:modifieClientcell>
+            	<p:empty>
+              		<p>Aucun client n est presente mais vous pouvez <t:pagelink page="client/creeModifierClient" >ajouter un client</t:pagelink>.</p>
+            	</p:empty>
+            </t:grid>
+        </p>
+        
+        <p>
+            [
+            <t:pagelink page="client/creeModifierClient">Cree un client</t:pagelink>
+            ]
+        </p>
+
+    </t:zone>
+
+</html>
