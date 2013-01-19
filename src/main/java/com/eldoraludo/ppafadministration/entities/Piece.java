@@ -6,6 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
 import org.apache.tapestry5.beaneditor.NonVisual;
 import org.apache.tapestry5.beaneditor.Validate;
@@ -18,7 +19,9 @@ public class Piece {
 	@NonVisual
 	public Long id;
 
-	// public Client client;
+	@Validate("required")
+	@ManyToOne
+	public Client client;
 
 	@Validate("required")
 	public Date date;
@@ -36,4 +39,11 @@ public class Piece {
 	@Validate("required")
 	public Double montant;
 
+	public Client getClient() {
+		return client;
+	}
+
+	public void setClient(Client client) {
+		this.client = client;
+	}
 }

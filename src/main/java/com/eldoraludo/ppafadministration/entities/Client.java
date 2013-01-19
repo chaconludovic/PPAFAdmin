@@ -9,6 +9,7 @@ import org.apache.tapestry5.beaneditor.NonVisual;
 
 @Entity
 public class Client {
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@NonVisual
