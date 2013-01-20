@@ -20,4 +20,22 @@ public class GestionPiece {
 		return session.createCriteria(Piece.class).list();
 	}
 
+	public Double getPrixRemise() {
+		if (piece.getRemise() != null) {
+			return (piece.getPrixUnitaire() - piece.getPrixUnitaire()
+					* piece.getRemise() / 100);
+		} else {
+			return null;
+		}
+	}
+
+	public Double getTotal() {
+		if (piece.getRemise() != null) {
+			return (piece.getPrixUnitaire() - piece.getPrixUnitaire()
+					* piece.getRemise() / 100)
+					* piece.getQuantite();
+		} else {
+			return piece.getPrixUnitaire() * piece.getQuantite();
+		}
+	}
 }

@@ -17,27 +17,33 @@ public class Piece {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@NonVisual
-	public Long id;
+	private Long id;
 
 	@Validate("required")
 	@ManyToOne
-	public Client client;
+	private Client client;
 
-	@Validate("required")
-	public Date date;
+	private Date date;
 
-	@Validate("required")
-	public String numeroPiece;
+	private String numeroPiece;
 
-	@Validate("required")
-	public TypePiece type;
+	private TypePiece type;
 
-	public Double remise;
+	private String designation;
 
-	public Double fraisPort;
+	private Double quantite;
 
-	@Validate("required")
-	public Double montant;
+	private Double remise;
+
+	private Double prixUnitaire;
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
 
 	public Client getClient() {
 		return client;
@@ -46,4 +52,61 @@ public class Piece {
 	public void setClient(Client client) {
 		this.client = client;
 	}
+
+	public Date getDate() {
+		return date;
+	}
+
+	public void setDate(Date date) {
+		this.date = date;
+	}
+
+	public String getNumeroPiece() {
+		return numeroPiece;
+	}
+
+	public void setNumeroPiece(String numeroPiece) {
+		this.numeroPiece = numeroPiece;
+	}
+
+	public TypePiece getType() {
+		return type;
+	}
+
+	public void setType(TypePiece type) {
+		this.type = type;
+	}
+
+	public String getDesignation() {
+		return designation;
+	}
+
+	public void setDesignation(String designation) {
+		this.designation = designation;
+	}
+
+	public Double getQuantite() {
+		return quantite;
+	}
+
+	public void setQuantite(Double quantite) {
+		this.quantite = quantite;
+	}
+
+	public Double getRemise() {
+		return remise;
+	}
+
+	public void setRemise(Double remise) {
+		this.remise = remise;
+	}
+
+	public Double getPrixUnitaire() {
+		return prixUnitaire;
+	}
+
+	public void setPrixUnitaire(Double prixUnitaire) {
+		this.prixUnitaire = prixUnitaire;
+	}
+
 }

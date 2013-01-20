@@ -1,7 +1,7 @@
 <html t:type="layout" title="Creer ou modifier une piece"
   xmlns:t="http://tapestry.apache.org/schema/tapestry_5_3.xsd" xmlns:p="tapestry:parameter">
 
-  <t:beaneditform object="piece" add="clientAAssocier">
+  <t:beaneditform object="piece" add="clientAAssocier" reorder="clientAAssocier, date,designation, numeroPiece,quantite,prixUnitaire, remise, prixUnitaire, type">
   		<p:clientAAssocier>
             <t:label for="Client"/>
             <t:Select t:id="client" value="piece.client" model="clientSelectModel" />
