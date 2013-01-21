@@ -15,7 +15,7 @@
 					${prixremise}
 	            </p:prixremisecell>
 	            <p:totalcell>
-					${total}
+					<span class="grid-total">${total}</span>
 	            </p:totalcell>
             	<p:empty>
               		<p>Aucune piece n est presente mais vous pouvez <t:pagelink page="piece/creerModifierPiece">ajouter une piece</t:pagelink>.</p>

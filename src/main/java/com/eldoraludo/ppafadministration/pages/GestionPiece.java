@@ -2,12 +2,14 @@ package com.eldoraludo.ppafadministration.pages;
 
 import java.util.List;
 
+import org.apache.tapestry5.annotations.Import;
 import org.apache.tapestry5.annotations.Property;
 import org.apache.tapestry5.ioc.annotations.Inject;
 import org.hibernate.Session;
 
 import com.eldoraludo.ppafadministration.entities.Piece;
 
+@Import(stylesheet = "context:general.css")
 public class GestionPiece {
 
 	@Inject

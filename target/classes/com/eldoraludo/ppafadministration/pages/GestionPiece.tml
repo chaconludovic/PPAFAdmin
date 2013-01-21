@@ -2,14 +2,21 @@
       xmlns:t="http://tapestry.apache.org/schema/tapestry_5_3.xsd"
       xmlns:p="tapestry:parameter">
 
+    <!-- TODO Ajouter un critere de recherche -->
     
     <t:zone t:id="zone">
         <p>
-             <t:grid source="pieces" t:row="piece" add="modifiePiece">
+             <t:grid source="pieces" t:row="piece" reorder="date, designation, numeroPiece, type, quantite, prixUnitaire,remise,prixremise, total,modifiePiece" add="modifiePiece,prixremise, total" >
              
 	            <p:modifiePiececell>
 	                <a t:type="pagelink" t:page="piece/creerModifierPiece" t:context="piece" href="#">Modifie</a>
 	            </p:modifiePiececell>
+	            <p:prixremisecell>
+					${prixremise}
+	            </p:prixremisecell>
+	            <p:totalcell>
+					<span class="grid-total">${total}</span>
+	            </p:totalcell>
             	<p:empty>
               		<p>Aucune piece n est presente mais vous pouvez <t:pagelink page="piece/creerModifierPiece">ajouter une piece</t:pagelink>.</p>
             	</p:empty>
@@ -21,6 +28,8 @@
             <t:pagelink page="piece/creerModifierPiece">Cree une piece</t:pagelink>
             ]
         </p>
+
+<!-- TODO Ajouter un total  -->
 
     </t:zone>
 
