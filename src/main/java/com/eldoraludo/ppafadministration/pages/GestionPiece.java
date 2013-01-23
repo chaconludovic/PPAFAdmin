@@ -40,4 +40,5 @@ public class GestionPiece {
 			return piece.getPrixUnitaire() * piece.getQuantite();
 		}
 	}
+
 }

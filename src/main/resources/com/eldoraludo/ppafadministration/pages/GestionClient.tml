@@ -17,6 +17,12 @@
         </p>
         
         <p>
+			 <t:cgrid model="model" source="clientPieces" row="clientPiece"  filtre="filtre" idTableau="clientPiecesTableau">
+	            <p:emptyCGrid><div class="nodata">rien</div></p:emptyCGrid>
+	        </t:cgrid>
+        </p>
+        
+        <p>
             [
             <t:pagelink page="client/creeModifierClient">Cree un client</t:pagelink>
             ]

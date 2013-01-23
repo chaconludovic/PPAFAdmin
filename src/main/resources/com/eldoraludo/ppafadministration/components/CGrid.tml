@@ -1,0 +1,89 @@
+<div xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd"
+     role="grid" id="${idTableau}" xmlns:p="tapestry:parameter">
+    <div class="${sourceGridEstVideClass}">
+    <t:form>
+        <t:zone t:id="zoneManager" id="zoneManager"/>
+        <div class="clear"></div>
+        <div class="table-toolbar">
+
+
+
+                <t:eventlink class="btn pull-right" event="export">Excel</t:eventlink>
+
+            <div id="datagrid_length" class="dataTables_length">
+                <label>
+                    <table>
+                        <tr>
+                            <td><span>${message:component.pagination.afficher}</span></td>
+                            <td><t:select t:id="listePaginationPossible"
+                              value="nombreLignesAffichees"
+                              model="listePagination"
+                              zone="cGridZone"
+                              blankOption="never" t:mixins="selectUniform"/></td>
+                            <td><span>${message:component.pagination.elements}</span></td>
+                        </tr>
+                    </table>
+                </label>
+            </div>
+
+            <t:if test="filtreIsBound">
+                <div class="dataTables_filter" id="datagrid_filter">
+                    <label><input t:type="textfield" t:id="filtre" id="filtre" value="filtre"
+                                  t:mixins="updatezone, placeholder" clientEvent="keyup" zone="zoneManager" delay="250"
+                                  placeholder="${message:commun.filtrer}"/></label>
+                </div>
+                <p:else>
+                    <t:if test="filterMore" negate="true">
+                        <div style="display:block; width:24px; height:24px;"></div>
+                    </t:if>
+                </p:else>
+            </t:if>
+            <t:if test="filterMore">
+                <t:delegate to="filterMore"/>
+            </t:if>
+
+        </div>
+    </t:form>
+        </div>
+
+    <t:zone t:id="cGridZone" id="cGridZone">
+        <t:grid t:id="cGrid" rowsPerPage="nombreLignesAfficheesRow" source="source" inPlace="true" row="row" rowIndex="rowIndex"
+                t:pagerPosition="none" t:rowClass="rowClass" model="model" overrides="overrides"
+                exclude="inherit:exclude" add="inherit:add" reorder="inherit:reorder">
+                <t:parameter name="empty">
+                    <t:if test="emptyCGrid">
+                        <t:delegate to="emptyCGrid"/>
+                        <p:else>
+                            <div class="nodata">${message:no.data}</div>
+                        </p:else>
+                    </t:if>
+                </t:parameter>
+        </t:grid>
+        <div class="${sourceGridEstVideClass}">
+        <div class="table-toolbar">
+            <div class="yui3-g">
+                <div class="yui3-u-1-2">
+                    <div id="datagrid_info" class=" content-text">${paginationInfo}</div>
+                </div>
+                <div class="yui3-u-1-2">
+
+                <div class="btn-group pull-right">
+                    <t:if test="afficheBoutonPage">
+                        <t:eventlink t:id="gotoPremiere" zone="cGridZone"
+                                 class="btn ui-state-${cssBoutonPremierePage}">${message:commun.premiere}</t:eventlink>
+                    </t:if>
+                    <t:gridpager zone="literal:cGridZone" t:id="cGridpager"
+                                 rowsPerPage="cGridComponent.rowsPerPage"
+                                 currentPage="cGridComponent.currentPage" source="cGridComponent.dataSource"
+                                 range="1"/>
+                    <t:if test="afficheBoutonPage">
+                        <t:eventlink t:id="gotoDerniere" zone="cGridZone"
+                                 class="btn ui-state-${cssBoutonDernierePage}">${message:commun.derniere}</t:eventlink>
+                    </t:if>
+                </div>
+                </div>
+            </div>
+        </div>
+        </div>
+    </t:zone>
+</div>

@@ -9,18 +9,58 @@ import org.apache.tapestry5.beaneditor.NonVisual;
 
 @Entity
 public class Client {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@NonVisual
-	public Long id;
+	private Long id;
 
-	public String nom;
+	private String nom;
 
-	public String rue;
+	private String rue;
 
-	public String ville;
+	private String ville;
 
-	public String codePostal;
+	private String codePostal;
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public String getNom() {
+		return nom;
+	}
+
+	public void setNom(String nom) {
+		this.nom = nom;
+	}
+
+	public String getRue() {
+		return rue;
+	}
+
+	public void setRue(String rue) {
+		this.rue = rue;
+	}
+
+	public String getVille() {
+		return ville;
+	}
+
+	public void setVille(String ville) {
+		this.ville = ville;
+	}
+
+	public String getCodePostal() {
+		return codePostal;
+	}
+
+	public void setCodePostal(String codePostal) {
+		this.codePostal = codePostal;
+	}
 
 }
