@@ -20,7 +20,7 @@ import com.eldoraludo.ppafadministration.util.Filtres;
 import com.google.common.base.Predicate;
 import com.google.common.collect.Collections2;
 
-@Import(stylesheet = "context:general.css")
+@Import(stylesheet = "context:css/general.css")
 public class GestionClient {
 
 	@Inject
@@ -38,7 +38,7 @@ public class GestionClient {
 
 	@Persist
 	@Property
-	private BeanModel model;
+	private BeanModel<Piece> model;
 
 	@Inject
 	private Messages messages;
@@ -49,6 +49,8 @@ public class GestionClient {
 	@SetupRender
 	public void setUp() {
 		model = beanModelSource.createDisplayModel(Piece.class, messages);
+		model.add("client").label("client").sortable(true);
+		model.include("client", "numeroPiece", "date");
 
 	}
 

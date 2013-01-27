@@ -109,4 +109,12 @@ public class Piece {
 		this.prixUnitaire = prixUnitaire;
 	}
 
+	public Double getTotal() {
+		if (remise != null) {
+			return (prixUnitaire - prixUnitaire * remise / 100) * quantite;
+		} else {
+			return prixUnitaire * quantite;
+		}
+	}
+
 }

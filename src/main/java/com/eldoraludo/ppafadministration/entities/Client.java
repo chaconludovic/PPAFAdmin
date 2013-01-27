@@ -8,7 +8,7 @@ import javax.persistence.Id;
 import org.apache.tapestry5.beaneditor.NonVisual;
 
 @Entity
-public class Client {
+public class Client implements Comparable<Client>{
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -61,6 +61,10 @@ public class Client {
 
 	public void setCodePostal(String codePostal) {
 		this.codePostal = codePostal;
+	}
+
+	public int compareTo(Client o) {
+		return this.getNom().compareTo(o.getNom());
 	}
 
 }

@@ -17,8 +17,9 @@
         </p>
         
         <p>
-			 <t:cgrid model="model" source="clientPieces" row="clientPiece"  filtre="filtre" idTableau="clientPiecesTableau">
+			<t:cgrid model="model" source="clientPieces" row="clientPiece"  filtre="filtre" idTableau="clientPiecesTableau">
 	            <p:emptyCGrid><div class="nodata">rien</div></p:emptyCGrid>
+	            <p:clientCell>${clientPiece.client?.nom}</p:clientCell>
 	        </t:cgrid>
         </p>
         

@@ -12,6 +12,11 @@
 *.o
 *.so
 *.class
+target/*
+
+# Settings #
+.settings/*
+
 
 # Packages #
 ############
