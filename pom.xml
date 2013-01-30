@@ -111,6 +111,11 @@ of testing facilities designed for use with TestNG (http://testng.org/), so it's
             <artifactId>tapestry5-jquery</artifactId>
             <version>3.2.1</version>
         </dependency>
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>${guava-version}</version>
+        </dependency>
     </dependencies>
     <build>
         <finalName>ppafadministration</finalName>
@@ -198,5 +203,6 @@ of testing facilities designed for use with TestNG (http://testng.org/), so it's
         <servlet-api-release-version>2.5</servlet-api-release-version>
         <testng-release-version>5.14.10</testng-release-version>
         <easymock-release-version>3.0</easymock-release-version>
+        <guava-version>12.0</guava-version>
     </properties>
 </project>

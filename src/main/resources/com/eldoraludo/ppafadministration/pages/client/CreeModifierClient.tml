@@ -1,6 +1,8 @@
-<html t:type="layout" title="Creer ou modifier un client"
+<html t:type="layout" title="${message:client.creer.modifier}"
   xmlns:t="http://tapestry.apache.org/schema/tapestry_5_3.xsd">
-
+	
+  <p><t:pagelink page="GestionClient">${message:client.retourner.gestion}</t:pagelink></p>
+  
   <t:beaneditform object="client" reorder="nom,rue,codePostal, ville"/>
   
   

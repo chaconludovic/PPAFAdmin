@@ -20,7 +20,7 @@ import com.eldoraludo.ppafadministration.util.Filtres;
 import com.google.common.base.Predicate;
 import com.google.common.collect.Collections2;
 
-@Import(stylesheet = "context:css/general.css")
+@Import(stylesheet = {"context:css/general.css","context:css/bst_framework.css"})
 public class GestionClient {
 
 	@Inject
