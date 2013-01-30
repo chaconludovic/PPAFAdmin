@@ -1,0 +1,26 @@
+<html t:type="layout" title="Gestion des fournisseurs"
+      xmlns:t="http://tapestry.apache.org/schema/tapestry_5_3.xsd"
+      xmlns:p="tapestry:parameter">
+
+    <!-- TODO Ajouter un critere de recherche -->
+    
+    <t:zone t:id="zone">
+        <p>
+            <t:cgrid model="model" source="fournisseurs" row="fournisseur"  filtre="filtre" idTableau="fournisseurstableau">
+            	<p:empty>
+              		<p>Aucun fournisseur est present mais vous pouvez <t:pagelink page="fournisseur/creeModifierFournisseur">ajouter un fournisseur</t:pagelink>.</p>
+            	</p:empty>
+	        </t:cgrid>
+        </p>
+        
+        <p>
+            [
+            <t:pagelink page="fournisseur/creeModifierFournisseur">${message:fournisseur.creer.page}</t:pagelink>
+            ]
+        </p>
+
+<!-- TODO Ajouter un total  -->
+
+    </t:zone>
+
+</html>

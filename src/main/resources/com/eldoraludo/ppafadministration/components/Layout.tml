@@ -22,9 +22,8 @@ Description: A Web 2.0 design with fluid width suitable for blogs and small webs
         <div class="header">
             <div class="logo">
                 <h1>
-                    <t:pagelink page="index">com.eldoraludo:ppafadministration</t:pagelink>
-                    &nbsp;
-                    version ${appVersion}
+                    <t:pagelink page="index">Gestion PPAF</t:pagelink>
+                   
                 </h1>
             </div>
             <div class="menu">
