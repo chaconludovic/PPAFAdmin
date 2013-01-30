@@ -6,21 +6,23 @@
     
     <t:zone t:id="zone">
         <p>
-             <t:grid source="pieces" t:row="piece" reorder="date, designation, numeroPiece, type, quantite, prixUnitaire,remise,prixremise, total,modifiePiece" add="modifiePiece,prixremise, total" >
-             
-	            <p:modifiePiececell>
+            <t:cgrid model="model" source="pieces" row="piece"  filtre="filtre" idTableau="piecestableau">
+	           <p:clientCell>
+					${piece.client?.nom}
+	            </p:clientCell>
+	            <p:modifiePieceCell>
 	                <a t:type="pagelink" t:page="piece/creerModifierPiece" t:context="piece" href="#">Modifie</a>
-	            </p:modifiePiececell>
-	            <p:prixremisecell>
+	            </p:modifiePieceCell>
+	            <p:prixremiseCell>
 					${prixremise}
-	            </p:prixremisecell>
-	            <p:totalcell>
-					<span class="grid-total">${total}</span>
-	            </p:totalcell>
+	            </p:prixremiseCell>
+	            <p:totalCell>
+					<span class="grid-total">${piece.total}</span>
+	            </p:totalCell>
             	<p:empty>
               		<p>Aucune piece n est presente mais vous pouvez <t:pagelink page="piece/creerModifierPiece">ajouter une piece</t:pagelink>.</p>
             	</p:empty>
-            </t:grid>
+	        </t:cgrid>
         </p>
         
         <p>

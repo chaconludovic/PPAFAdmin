@@ -2,6 +2,7 @@ package com.eldoraludo.ppafadministration.components;
 
 import org.apache.tapestry5.*;
 import org.apache.tapestry5.annotations.*;
+import org.apache.tapestry5.ioc.Messages;
 import org.apache.tapestry5.ioc.annotations.*;
 import org.apache.tapestry5.BindingConstants;
 import org.apache.tapestry5.SymbolConstants;
@@ -32,6 +33,9 @@ public class Layout {
 	@Inject
 	private ComponentResources resources;
 
+	@Inject
+	private Messages messages;
+
 	@Property
 	@Inject
 	@Symbol(SymbolConstants.APPLICATION_VERSION)
@@ -42,7 +46,11 @@ public class Layout {
 				: null;
 	}
 
+	public String getTitleForPageName() {
+		return messages.get(pageName);
+	}
+
 	public String[] getPageNames() {
-		return new String[] { "Index", "GestionPiece", "GestionClient","About"};
+		return new String[] { "Index", "GestionPiece", "GestionClient", "About" };
 	}
 }
