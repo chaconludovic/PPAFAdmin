@@ -1,0 +1,9 @@
+<html t:type="layout" title="${message:item.creer.modifier}"
+  xmlns:t="http://tapestry.apache.org/schema/tapestry_5_3.xsd">
+	
+  <p><t:pagelink page="GestionItem">${message:item.retourner.gestion}</t:pagelink></p>
+  
+  <t:beaneditform object="item" reorder="designation,ean13, prixunitaire"/>
+  
+  
+</html>

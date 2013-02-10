@@ -1,0 +1,26 @@
+<html t:type="layout" title="Gestion des items"
+      xmlns:t="http://tapestry.apache.org/schema/tapestry_5_3.xsd"
+      xmlns:p="tapestry:parameter">
+
+    <!-- TODO Ajouter un critere de recherche -->
+    
+    <t:zone t:id="zone">
+        <p>
+            <t:cgrid model="model" source="items" row="item"  filtre="filtre" idTableau="itemstableau">
+            	<p:empty>
+              		<p>Aucun item est present mais vous pouvez <t:pagelink page="item/creeModifierItem">ajouter un item</t:pagelink>.</p>
+            	</p:empty>
+	        </t:cgrid>
+        </p>
+        
+        <p>
+            [
+            <t:pagelink page="item/creeModifierItem">${message:item.creer.page}</t:pagelink>
+            ]
+        </p>
+
+<!-- TODO Ajouter un total  -->
+
+    </t:zone>
+
+</html>

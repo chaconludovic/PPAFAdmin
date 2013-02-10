@@ -1,12 +1,16 @@
 package com.eldoraludo.ppafadministration.entities;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 import org.apache.tapestry5.beaneditor.NonVisual;
 import org.apache.tapestry5.beaneditor.Validate;
@@ -23,19 +27,25 @@ public class Piece {
 	@ManyToOne
 	private Client client;
 
+	@Validate("required")
 	private Date date;
 
+	@Validate("required")
 	private String numeroPiece;
 
+	@Validate("required")
 	private TypePiece type;
 
-	private String designation;
+	@OneToMany(mappedBy = "piece", cascade = CascadeType.ALL)
+	private List<Article> articles = new ArrayList<Article>();
 
-	private Double quantite;
+	public List<Article> getArticles() {
+		return articles;
+	}
 
-	private Double remise;
-
-	private Double prixUnitaire;
+	public void setArticles(List<Article> articles) {
+		this.articles = articles;
+	}
 
 	public Long getId() {
 		return id;
@@ -75,46 +85,6 @@ public class Piece {
 
 	public void setType(TypePiece type) {
 		this.type = type;
-	}
-
-	public String getDesignation() {
-		return designation;
-	}
-
-	public void setDesignation(String designation) {
-		this.designation = designation;
-	}
-
-	public Double getQuantite() {
-		return quantite;
-	}
-
-	public void setQuantite(Double quantite) {
-		this.quantite = quantite;
-	}
-
-	public Double getRemise() {
-		return remise;
-	}
-
-	public void setRemise(Double remise) {
-		this.remise = remise;
-	}
-
-	public Double getPrixUnitaire() {
-		return prixUnitaire;
-	}
-
-	public void setPrixUnitaire(Double prixUnitaire) {
-		this.prixUnitaire = prixUnitaire;
-	}
-
-	public Double getTotal() {
-		if (remise != null) {
-			return (prixUnitaire - prixUnitaire * remise / 100) * quantite;
-		} else {
-			return prixUnitaire * quantite;
-		}
 	}
 
 }
