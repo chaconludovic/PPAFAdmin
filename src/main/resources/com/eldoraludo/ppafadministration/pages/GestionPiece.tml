@@ -11,13 +11,14 @@
 					${piece.client?.nom}
 	            </p:clientCell>
 	            <p:modifiePieceCell>
-	                <a t:type="pagelink" t:page="piece/creerModifierPiece" t:context="piece" href="#">Modifie</a>
+	                <!-- <a t:type="pagelink" t:page="piece/creerModifierPiece" t:context="piece" href="#">Modifie</a> -->
+	                <t:pageLink page="piece/creerModifierPiece" context="piece.id">Modifie</t:pageLink>
 	            </p:modifiePieceCell>
 	            <p:prixremiseCell>
 					${prixremise}
 	            </p:prixremiseCell>
 	            <p:totalCell>
-					<span class="grid-total">${piece.total}</span>
+					<span class="grid-total">${total}</span>
 	            </p:totalCell>
             	<p:empty>
               		<p>Aucune piece n est presente mais vous pouvez <t:pagelink page="piece/creerModifierPiece">ajouter une piece</t:pagelink>.</p>

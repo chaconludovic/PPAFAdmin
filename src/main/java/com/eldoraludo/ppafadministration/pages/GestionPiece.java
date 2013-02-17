@@ -19,7 +19,8 @@ import com.eldoraludo.ppafadministration.util.Filtres;
 import com.google.common.base.Predicate;
 import com.google.common.collect.Collections2;
 
-@Import(stylesheet = {"context:css/general.css","context:css/bst_framework.css"})
+@Import(stylesheet = { "context:css/general.css",
+		"context:css/bst_framework.css" })
 public class GestionPiece {
 
 	@Inject
@@ -48,9 +49,8 @@ public class GestionPiece {
 		model.add("client").label("client").sortable(true);
 		model.addEmpty("modifiePiece").label("Modifier une pièce");
 		model.addEmpty("prixremise").label("Prix remise");
-		model.get("total").label("Total").sortable(true);
-		model.include("date", "designation", "numeroPiece", "client", "type",
-				"quantite", "prixUnitaire", "remise", "prixremise", "total",
+		model.addEmpty("total").label("Total");
+		model.include("date", "numeroPiece", "client", "type", "total",
 				"modifiePiece");
 
 	}
@@ -61,20 +61,23 @@ public class GestionPiece {
 				new Predicate<Piece>() {
 					public boolean apply(Piece piece) {
 						return Filtres.matchesAny(filtre, piece.getClient()
-								.getNom(), piece.getDesignation(),piece.getNumeroPiece());
+								.getNom(), piece.getNumeroPiece(), piece
+								.getNumeroPiece());
 					}
 				});
 	}
 
 	public Double getPrixRemise() {
-		if (piece.getRemise() != null) {
-			return (piece.getPrixUnitaire() - piece.getPrixUnitaire()
-					* piece.getRemise() / 100);
-		} else {
-			return null;
-		}
+		// if (piece.getRemise() != null) {
+		// return (piece.getPrixUnitaire() - piece.getPrixUnitaire()
+		// * piece.getRemise() / 100);
+		// } else {
+		// return null;
+		// }
+		return null; // TODO
 	}
 
-	
-
+	public Double getTotal() {
+		return null; // TODO
+	}
 }

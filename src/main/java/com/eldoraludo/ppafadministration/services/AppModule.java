@@ -9,7 +9,13 @@ import org.apache.tapestry5.ioc.MappedConfiguration;
 import org.apache.tapestry5.ioc.OrderedConfiguration;
 import org.apache.tapestry5.ioc.Resource;
 import org.apache.tapestry5.ioc.ServiceBinder;
+import org.apache.tapestry5.ioc.annotations.Contribute;
 import org.apache.tapestry5.ioc.annotations.Local;
+import org.apache.tapestry5.ioc.internal.services.ClasspathResourceSymbolProvider;
+import org.apache.tapestry5.ioc.internal.services.ResourceSymbolProvider;
+import org.apache.tapestry5.ioc.internal.util.ClasspathResource;
+import org.apache.tapestry5.ioc.services.SymbolProvider;
+import org.apache.tapestry5.ioc.services.SymbolSource;
 import org.apache.tapestry5.services.AssetSource;
 import org.apache.tapestry5.services.Request;
 import org.apache.tapestry5.services.RequestFilter;
@@ -27,6 +33,19 @@ import com.eldoraludo.ppafadministration.stream.GridToExcelConverter;
 public class AppModule {
 	public static void bind(ServiceBinder binder) {
 		binder.bind(GridToExcelConverter.class);
+	}
+
+	/**
+	 * todo ne fonctionne pas
+	 * @param configuration
+	 */
+	@Contribute(SymbolSource.class)
+	public void contributeSymbolSource(
+			OrderedConfiguration<SymbolProvider> configuration) {
+		configuration.add("PPAF Properties", new ResourceSymbolProvider(
+				new ClasspathResource("ppaf.properties")));
+		configuration.add("Environment PPAF Properties",
+				new PpafExternalConfiguration().createSymbolProvider());
 	}
 
 	public static void contributeFactoryDefaults(

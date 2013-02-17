@@ -11,17 +11,21 @@ import org.apache.tapestry5.annotations.SetupRender;
 import org.apache.tapestry5.beaneditor.BeanModel;
 import org.apache.tapestry5.ioc.Messages;
 import org.apache.tapestry5.ioc.annotations.Inject;
+import org.apache.tapestry5.ioc.annotations.Symbol;
 import org.apache.tapestry5.services.BeanModelSource;
 import org.hibernate.Session;
-
 import com.eldoraludo.ppafadministration.entities.Client;
 import com.eldoraludo.ppafadministration.entities.Piece;
 import com.eldoraludo.ppafadministration.util.Filtres;
 import com.google.common.base.Predicate;
 import com.google.common.collect.Collections2;
 
-@Import(stylesheet = {"context:css/general.css","context:css/bst_framework.css"})
+@Import(stylesheet = { "context:css/general.css",
+		"context:css/bst_framework.css" }, library = "jquery-1.4.4.min.js")
 public class GestionClient {
+
+	@Symbol("test")
+	private String test;
 
 	@Inject
 	private Session session;
@@ -64,8 +68,9 @@ public class GestionClient {
 				new Predicate<Piece>() {
 					public boolean apply(Piece piece) {
 						return Filtres.matchesAny(filtre, piece.getClient()
-								.getNom(), piece.getDesignation());
+								.getNom(), piece.getNumeroPiece());
 					}
 				});
 	}
+
 }
