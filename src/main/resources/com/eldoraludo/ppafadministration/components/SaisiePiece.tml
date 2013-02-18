@@ -8,19 +8,19 @@
 		<table>
 				<tr>
 					<th><t:label for="client"/>:</th>
-					<td><t:Select t:id="client" value="client" model="listeClient" /></td>
+					<td><t:Select t:id="client" value="piece.client" model="listeClient" /></td>
 				</tr>
 				<tr>
 					<th><t:label for="date"/>:</th>
-					<td><input t:type="DateField" t:id="date" value="date" t:format="dd/MM/yyyy" t:validate="required" size="10"/></td>
+					<td><input t:type="DateField" t:id="date" value="piece.date" t:format="dd/MM/yyyy" t:validate="required" size="10"/></td>
 				</tr>
 				<tr>
 					<th><t:label for="numeroPiece"/>:</th>
-					<td><t:textfield t:id="numeroPiece" id="numeroPiece" value="numeroPiece"/></td>
+					<td><t:textfield t:id="numeroPiece" id="numeroPiece" value="piece.numeroPiece"/></td>
 				</tr>
 				<tr>
 					<th><t:label for="type"/>:</th>
-					<td><input t:type="Select" t:id="type" value="type"/></td>
+					<td><input t:type="Select" t:id="type" value="piece.type"/></td>
 				</tr>
 				<tr>
 			        <th> <h2>Articles</h2></th>

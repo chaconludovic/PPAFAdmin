@@ -1,7 +1,5 @@
 package com.eldoraludo.ppafadministration.entities;
 
-import java.util.Date;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -12,7 +10,7 @@ import org.apache.tapestry5.beaneditor.NonVisual;
 import org.apache.tapestry5.beaneditor.Validate;
 
 @Entity
-public class Article implements Comparable<Article>{
+public class Article implements Comparable<Article> {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,7 +28,6 @@ public class Article implements Comparable<Article>{
 	@Validate("required")
 	private Double prixUnitaire;
 
-	
 	private Double remise;
 
 	@Validate("required")
@@ -110,5 +107,4 @@ public class Article implements Comparable<Article>{
 		return this.info.compareTo(o.info);
 	}
 
-	
 }
