@@ -35,11 +35,10 @@ public class Article implements Comparable<Article> {
 	private Piece piece;
 
 	public Double getPrixUnitaireRemiser() {
-		if (remise != null) {
+		if (remise != null && prixUnitaire != null) {
 			return (prixUnitaire - prixUnitaire * remise / 100);
-		} else {
-			return prixUnitaire;
 		}
+		return null;
 	}
 
 	public Long getId() {

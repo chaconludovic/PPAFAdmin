@@ -18,6 +18,7 @@ import org.apache.tapestry5.beaneditor.Validate;
 import org.apache.tapestry5.hibernate.annotations.CommitAfter;
 import org.apache.tapestry5.ioc.annotations.Inject;
 import org.apache.tapestry5.services.SelectModelFactory;
+import org.apache.tapestry5.services.ajax.AjaxResponseRenderer;
 import org.hibernate.Session;
 
 import com.eldoraludo.ppafadministration.entities.Article;
@@ -42,6 +43,7 @@ public class SaisiePiece {
 	private Piece piece;
 
 	@Property
+	@Persist
 	private FieldValue fieldValue;
 
 	@Inject
@@ -56,6 +58,9 @@ public class SaisiePiece {
 	@Property
 	@Persist
 	private AjaxLoopHolder<FieldValue> holder;
+
+	@Inject
+	private AjaxResponseRenderer ajaxResponseRenderer;
 
 	@SetupRender
 	public void setupRender() {
@@ -119,6 +124,46 @@ public class SaisiePiece {
 		session.delete(articleToDelete);
 	}
 
+	/**
+	 * TODO a decommenter, ne fonctionne pas a cause d'un prob avec la zone
+	 * ArticlesZone_, ce n'est pas la bonne zone qui est sollicé essayer de
+	 * retrouver le composant zone et la recharger
+	 * 
+	 * problematique de zone dans loop
+	 */
+	// @Inject
+	// private ComponentResources componentResources;
+
+	// @InjectComponent
+	// private Zone articlesZone;
+	// @OnEvent(component = "remise", value = UpdateZone.DEFAULT_EVENT)
+	// public void onChangeFromRemise(
+	// @RequestParameter(value = "remise", allowBlank = true) Double remise) {
+	// this.fieldValue.article.setRemise(remise);
+	// ajaxResponseRenderer.addRender((Zone)
+	// componentResources.getEmbeddedComponent("ArticlesZone_"
+	// + this.fieldValue.order + ""));
+	// // return ((Zone) componentResources.getEmbeddedComponent("ArticlesZone_"
+	// // + this.fieldValue.order + "")).getBody();
+	// }
+	//
+	// @OnEvent(component = "prixUnitaire", value = UpdateZone.DEFAULT_EVENT)
+	// public void onChangeFromPrixUnitaire(
+	// @RequestParameter(value = "prixUnitaire", allowBlank = true) Double
+	// prixUnitaire) {
+	// this.fieldValue.article.setPrixUnitaire(prixUnitaire);
+	// List<String> embeddedComponentIds =
+	// componentResources.getComponentModel().getEmbeddedComponentIds();
+	// ajaxResponseRenderer.addRender((Zone)
+	// componentResources.getEmbeddedComponent("ArticlesZone_"
+	// + this.fieldValue.order + ""));
+	// //return ().getBody();
+	// }
+	//
+	// public String getArticlesZoneId() {
+	// return "ArticlesZone_" + fieldValue.order;
+	// }
+
 	public SelectModel getListeItem() {
 		List<Item> items = session.createCriteria(Item.class).list();
 		return selectModelFactory.create(items, "designation");
@@ -135,6 +180,9 @@ public class SaisiePiece {
 		public Article article;
 
 		public Integer order;
+
+		// @InjectComponent
+		// private Zone articlesZone;
 
 		public int compareTo(FieldValue o) {
 			if (this.order == null)

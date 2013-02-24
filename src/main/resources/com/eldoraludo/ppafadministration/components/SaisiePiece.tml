@@ -25,18 +25,20 @@
 				<tr>
 			        <th> <h2>Articles</h2></th>
 			        <td>
+			        
 				      <t:ajaxformloop t:id="articlesLoop" id="articlesLoop" source="holder.values" value="fieldValue" encoder="holder.encoder">
 				      
 						      <t:Select t:id="item" value="fieldValue.article.item" model="listeItem"  />
 						      qte <t:textfield t:id="quantite" id="quantite" value="fieldValue.article.quantite" type="number" min="0"/>
-						      <!-- PU <t:textfield t:id="prixUnitaire" id="prixUnitaire" value="fieldValue.article.prixUnitaire"  t:mixins="updatezone" zone="totalZone" /> -->
-						      <!-- Remise <t:textfield t:id="remise" id="remise" value="fieldValue.article.remise" t:mixins="updatezone" zone="totalZone"/> -->
-						      PU <t:textfield t:id="prixUnitaire" id="prixUnitaire" value="fieldValue.article.prixUnitaire"/>
-						      Remise <t:textfield t:id="remise" id="remise" value="fieldValue.article.remise"/>
-						      	<!-- PU remise ${article.prixUnitaireRemiser} -->
+						      Remise <t:textfield t:id="remise" id="remise" value="fieldValue.article.remise"   />   <!-- t:mixins="updatezone" t:zone="prop:articlesZoneId" -->
+						      PU <t:textfield t:id="prixUnitaire" id="prixUnitaire" value="fieldValue.article.prixUnitaire" />  <!--  t:mixins="updatezone" t:zone="prop:articlesZoneId" -->
+						      <!-- <t:zone id="prop:articlesZoneId">
+						      	PU remise ${fieldValue.article.prixUnitaireRemiser}
+						      </t:zone> -->
 					          |
 					          <t:removerowlink>remove</t:removerowlink>
 				        </t:ajaxformloop>
+				        
 					</td>
 			</tr>
  		</table>
