@@ -57,4 +57,11 @@ public class Item {
 		this.prixUnitaire = prixUnitaire;
 	}
 
+	@Override
+	public String toString() {
+		return  designation + " - " + ean13;
+	}
+	
+	
+
 }

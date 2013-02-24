@@ -4,9 +4,13 @@ import static org.apache.commons.lang.builder.EqualsBuilder.reflectionEquals;
 import static org.apache.commons.lang.builder.HashCodeBuilder.reflectionHashCode;
 import static org.apache.commons.lang.builder.ToStringBuilder.reflectionToString;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import org.apache.commons.collections.map.HashedMap;
 import org.apache.tapestry5.EventConstants;
+import org.apache.tapestry5.OptionModel;
 import org.apache.tapestry5.SelectModel;
 import org.apache.tapestry5.annotations.InjectComponent;
 import org.apache.tapestry5.annotations.InjectPage;
@@ -20,11 +24,15 @@ import org.apache.tapestry5.beaneditor.Validate;
 import org.apache.tapestry5.corelib.components.Form;
 import org.apache.tapestry5.corelib.components.Zone;
 import org.apache.tapestry5.hibernate.annotations.CommitAfter;
+import org.apache.tapestry5.internal.OptionModelImpl;
+import org.apache.tapestry5.internal.SelectModelImpl;
 import org.apache.tapestry5.ioc.Messages;
 import org.apache.tapestry5.ioc.annotations.Inject;
+import org.apache.tapestry5.ioc.internal.util.CollectionFactory;
 import org.apache.tapestry5.services.SelectModelFactory;
 import org.apache.tapestry5.services.ajax.AjaxResponseRenderer;
 import org.hibernate.Session;
+import org.joda.time.DateMidnight;
 
 import com.eldoraludo.ppafadministration.entities.Article;
 import com.eldoraludo.ppafadministration.entities.Client;
@@ -98,6 +106,8 @@ public class SaisiePiece {
 			}
 		} else {
 			this.piece = new Piece();
+			this.piece.setNumeroPiece(DateMidnight.now().toString("YYYYMMdd")
+					+ "_");
 		}
 	}
 
@@ -212,7 +222,12 @@ public class SaisiePiece {
 
 	public SelectModel getListeItem() {
 		List<Item> items = session.createCriteria(Item.class).list();
-		return selectModelFactory.create(items, "designation");
+		List<OptionModel> options = CollectionFactory.newList();
+		for (Item item : items) {
+			options.add(new OptionModelImpl(item.toString(),
+					item));
+		}
+		return new SelectModelImpl(null, options);
 	}
 
 	public SelectModel getListeClient() {
