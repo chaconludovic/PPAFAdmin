@@ -38,6 +38,14 @@ public class Article implements Comparable<Article> {
 		if (remise != null && prixUnitaire != null) {
 			return (prixUnitaire - prixUnitaire * remise / 100);
 		}
+		return prixUnitaire;
+	}
+
+	public Double getTotal() {
+		Double prixUnitaireRemiser = getPrixUnitaireRemiser();
+		if (prixUnitaireRemiser != null && this.quantite != null) {
+			return prixUnitaireRemiser * this.quantite;
+		}
 		return null;
 	}
 
@@ -95,10 +103,6 @@ public class Article implements Comparable<Article> {
 
 	public void setPiece(Piece piece) {
 		this.piece = piece;
-	}
-
-	public Double getTotal() {
-		return getPrixUnitaireRemiser() * quantite;
 	}
 
 	public int compareTo(Article o) {

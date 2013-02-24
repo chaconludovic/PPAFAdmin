@@ -49,8 +49,8 @@ public class GestionPiece {
 		model.add("client").label("client").sortable(true);
 		model.addEmpty("modifiePiece").label("Modifier une pièce");
 		model.addEmpty("prixremise").label("Prix remise");
-		model.addEmpty("total").label("Total");
-		model.include("date", "numeroPiece", "client", "type", "total",
+//		model.addEmpty("total").label("Total");
+		model.include("date", "client", "numeroPiece", "type", "total",
 				"modifiePiece");
 
 	}
@@ -78,6 +78,6 @@ public class GestionPiece {
 	}
 
 	public Double getTotal() {
-		return null; // TODO
+		return piece.getTotal();
 	}
 }

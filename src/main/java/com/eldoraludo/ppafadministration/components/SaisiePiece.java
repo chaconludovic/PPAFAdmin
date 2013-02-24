@@ -8,14 +8,19 @@ import java.util.List;
 
 import org.apache.tapestry5.EventConstants;
 import org.apache.tapestry5.SelectModel;
+import org.apache.tapestry5.annotations.InjectComponent;
 import org.apache.tapestry5.annotations.InjectPage;
+import org.apache.tapestry5.annotations.Log;
 import org.apache.tapestry5.annotations.OnEvent;
 import org.apache.tapestry5.annotations.Parameter;
 import org.apache.tapestry5.annotations.Persist;
 import org.apache.tapestry5.annotations.Property;
 import org.apache.tapestry5.annotations.SetupRender;
 import org.apache.tapestry5.beaneditor.Validate;
+import org.apache.tapestry5.corelib.components.Form;
+import org.apache.tapestry5.corelib.components.Zone;
 import org.apache.tapestry5.hibernate.annotations.CommitAfter;
+import org.apache.tapestry5.ioc.Messages;
 import org.apache.tapestry5.ioc.annotations.Inject;
 import org.apache.tapestry5.services.SelectModelFactory;
 import org.apache.tapestry5.services.ajax.AjaxResponseRenderer;
@@ -25,6 +30,7 @@ import com.eldoraludo.ppafadministration.entities.Article;
 import com.eldoraludo.ppafadministration.entities.Client;
 import com.eldoraludo.ppafadministration.entities.Item;
 import com.eldoraludo.ppafadministration.entities.Piece;
+import com.eldoraludo.ppafadministration.entities.TypePiece;
 import com.eldoraludo.ppafadministration.pages.GestionPiece;
 import com.eldoraludo.ppafadministration.support.AjaxLoopHolder;
 
@@ -62,11 +68,25 @@ public class SaisiePiece {
 	@Inject
 	private AjaxResponseRenderer ajaxResponseRenderer;
 
+	@InjectComponent(value = "saisiePieceFormZone")
+	private Zone saisiePieceFormZone;
+
+	@Inject
+	private Messages messages;
+
+	@InjectComponent
+	private Form saisiePieceForm;
+
+	@Property
+	@Parameter(allowNull = true)
+	private TypePiece typeSauvegarder;
+
 	@SetupRender
 	public void setupRender() {
 		holder = new AjaxLoopHolder<FieldValue>();
 		if (this.id != null) {
 			this.piece = (Piece) session.load(Piece.class, id);
+			this.typeSauvegarder = this.piece.getType();
 			if (this.piece != null) {
 				int i = 0;
 				for (Article article_ : this.piece.getArticles()) {
@@ -81,7 +101,33 @@ public class SaisiePiece {
 		}
 	}
 
-	@OnEvent(value = EventConstants.SUCCESS, component = "pieceForm")
+	@Log
+	@OnEvent(value = EventConstants.VALIDATE, component = "saisiePieceForm")
+	void onValidateFromSaisiePieceForm() {
+		System.out.println(this.piece.getType());
+		System.out.println(this.typeSauvegarder);
+		if (this.typeSauvegarder != null) {
+			if (!this.piece.getType().equals(TypePiece.Facture)
+					&& this.typeSauvegarder.equals(TypePiece.Facture)
+					|| !this.piece.getType().equals(TypePiece.Avoir)
+					&& this.typeSauvegarder.equals(TypePiece.Avoir)) {
+				saisiePieceForm.recordError(messages
+						.get("saisiepiece.message.erreur.type.factureavoir"));
+			}
+		}
+		if (this.typeSauvegarder != null) {
+			if (this.piece.getType().equals(TypePiece.Livraison)
+					&& this.typeSauvegarder.equals(TypePiece.Depot)
+					|| this.piece.getType().equals(TypePiece.Depot)
+					&& this.typeSauvegarder.equals(TypePiece.Livraison)) {
+				saisiePieceForm.recordError(messages
+						.get("saisiepiece.message.erreur.type.livraisondepot"));
+			}
+		}
+		ajaxResponseRenderer.addRender(saisiePieceFormZone);
+	}
+
+	@OnEvent(value = EventConstants.SUCCESS, component = "saisiePieceForm")
 	@CommitAfter
 	Object onSuccess() {
 		if (piece.getId() == null) {

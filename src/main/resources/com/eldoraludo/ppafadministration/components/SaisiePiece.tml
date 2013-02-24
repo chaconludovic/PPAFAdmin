@@ -1,50 +1,53 @@
 <div xmlns:t="http://tapestry.apache.org/schema/tapestry_5_3.xsd" xmlns:p="tapestry:parameter">
-    <t:form t:id="pieceForm">
-
-      <t:errors/>
-
-      <div class="t-beaneditor">
-
-		<table>
-				<tr>
-					<th><t:label for="client"/>:</th>
-					<td><t:Select t:id="client" value="piece.client" model="listeClient" /></td>
-				</tr>
-				<tr>
-					<th><t:label for="date"/>:</th>
-					<td><input t:type="DateField" t:id="date" value="piece.date" t:format="dd/MM/yyyy" t:validate="required" size="10"/></td>
-				</tr>
-				<tr>
-					<th><t:label for="numeroPiece"/>:</th>
-					<td><t:textfield t:id="numeroPiece" id="numeroPiece" value="piece.numeroPiece"/></td>
-				</tr>
-				<tr>
-					<th><t:label for="type"/>:</th>
-					<td><input t:type="Select" t:id="type" value="piece.type"/></td>
-				</tr>
-				<tr>
-			        <th> <h2>Articles</h2></th>
-			        <td>
-			        
-				      <t:ajaxformloop t:id="articlesLoop" id="articlesLoop" source="holder.values" value="fieldValue" encoder="holder.encoder">
-				      
-						      <t:Select t:id="item" value="fieldValue.article.item" model="listeItem"  />
-						      qte <t:textfield t:id="quantite" id="quantite" value="fieldValue.article.quantite" type="number" min="0"/>
-						      Remise <t:textfield t:id="remise" id="remise" value="fieldValue.article.remise"   />   <!-- t:mixins="updatezone" t:zone="prop:articlesZoneId" -->
-						      PU <t:textfield t:id="prixUnitaire" id="prixUnitaire" value="fieldValue.article.prixUnitaire" />  <!--  t:mixins="updatezone" t:zone="prop:articlesZoneId" -->
-						      <!-- <t:zone id="prop:articlesZoneId">
-						      	PU remise ${fieldValue.article.prixUnitaireRemiser}
-						      </t:zone> -->
-					          |
-					          <t:removerowlink>remove</t:removerowlink>
-				        </t:ajaxformloop>
+   <t:zone t:id="saisiePieceFormZone" id="saisiePieceFormZone">
+	   <t:form t:id="saisiePieceForm" clientValidation="submit"
+                    t:zone="saisiePieceFormZone">
+		  <t:hidden value="typeSauvegarder"/>
+	      <t:errors/>
+	
+	      <div class="t-beaneditor">
+	
+			<table>
+					<tr>
+						<th><t:label for="client"/>:</th>
+						<td><t:Select t:id="client" value="piece.client" model="listeClient" /></td>
+					</tr>
+					<tr>
+						<th><t:label for="date"/>:</th>
+						<td><input t:type="DateField" t:id="date" value="piece.date" t:format="dd/MM/yyyy" t:validate="required" size="10"/></td>
+					</tr>
+					<tr>
+						<th><t:label for="numeroPiece"/>:</th>
+						<td><t:textfield t:id="numeroPiece" id="numeroPiece" value="piece.numeroPiece"/></td>
+					</tr>
+					<tr>
+						<th><t:label for="type"/>:</th>
+						<td><input t:type="Select" t:id="type" value="piece.type"/></td>
+					</tr>
+					<tr>
+				        <th> <h2>Articles</h2></th>
+				        <td>
 				        
-					</td>
-			</tr>
- 		</table>
-        <p>
-          <input type="submit" value="Update"/>
-        </p>
-      </div>
-    </t:form>
+					      <t:ajaxformloop t:id="articlesLoop" id="articlesLoop" source="holder.values" value="fieldValue" encoder="holder.encoder">
+					      
+							      <t:Select t:id="item" value="fieldValue.article.item" model="listeItem"  />
+							      qte <t:textfield t:id="quantite" id="quantite" value="fieldValue.article.quantite" type="number" min="0"/>
+							      Remise <t:textfield t:id="remise" id="remise" value="fieldValue.article.remise"   />   <!-- t:mixins="updatezone" t:zone="prop:articlesZoneId" -->
+							      PU <t:textfield t:id="prixUnitaire" id="prixUnitaire" value="fieldValue.article.prixUnitaire" />  <!--  t:mixins="updatezone" t:zone="prop:articlesZoneId" -->
+							      <!-- <t:zone id="prop:articlesZoneId">
+							      	PU remise ${fieldValue.article.prixUnitaireRemiser}
+							      </t:zone> -->
+						          |
+						          <t:removerowlink>remove</t:removerowlink>
+					        </t:ajaxformloop>
+					        
+						</td>
+				</tr>
+	 		</table>
+	        <p>
+	          <input type="submit" value="Update"/>
+	        </p>
+	      </div>
+	    </t:form>
+    </t:zone>
 </div>
