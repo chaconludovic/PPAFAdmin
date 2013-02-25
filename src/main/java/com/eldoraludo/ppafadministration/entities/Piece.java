@@ -86,5 +86,14 @@ public class Piece {
 	public void setType(TypePiece type) {
 		this.type = type;
 	}
+	
+	public Double getTotal() {
+		Double total = 0.0;
+		for (Article article : articles) {
+			total += article.getTotal();
+		}
+		return total;
+	}
+
 
 }
