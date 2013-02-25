@@ -49,11 +49,12 @@ public class GestionPiece {
 		model.add("client").label("client").sortable(true);
 		model.addEmpty("modifiePiece").label("Modifier une pièce");
 		model.addEmpty("prixremise").label("Prix remise");
-		model.include("date", "numeroPiece", "client", "type", "total",
+//		model.addEmpty("total").label("Total");
+		model.include("date", "client", "numeroPiece", "type", "total",
 				"modifiePiece");
 
 	}
-
+	
 	public Collection<Piece> getPieces() {
 		List<Piece> list = session.createCriteria(Piece.class).list();
 		return StringUtils.isBlank(filtre) ? list : Collections2.filter(list,
