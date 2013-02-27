@@ -29,6 +29,7 @@ import org.apache.tapestry5.internal.OptionModelImpl;
 import org.apache.tapestry5.internal.SelectModelImpl;
 import org.apache.tapestry5.ioc.Messages;
 import org.apache.tapestry5.ioc.annotations.Inject;
+import org.apache.tapestry5.ioc.annotations.Symbol;
 import org.apache.tapestry5.ioc.internal.util.CollectionFactory;
 import org.apache.tapestry5.services.SelectModelFactory;
 import org.apache.tapestry5.services.ajax.AjaxResponseRenderer;
@@ -94,6 +95,9 @@ public class SaisiePiece {
 	@InjectComponent
 	private Zone articlesZone;
 
+	@InjectComponent
+	private Zone totalZone;
+
 	@SetupRender
 	public void setupRender() {
 		holder = new AjaxLoopHolder<FieldValue>();
@@ -116,7 +120,6 @@ public class SaisiePiece {
 		}
 	}
 
-	@Log
 	@OnEvent(value = EventConstants.VALIDATE, component = "saisiePieceForm")
 	void onValidateFromSaisiePieceForm() {
 		System.out.println(this.piece.getType());
@@ -185,22 +188,39 @@ public class SaisiePiece {
 		session.delete(articleToDelete);
 	}
 
+	@OnEvent(component = "quantite", value = UpdateZone.DEFAULT_EVENT)
+	public void onChangeFromQuantite(
+			@RequestParameter(value = "quantite", allowBlank = true) Double quantite,
+			int i) {
+		this.piece.getArticles().get(i).setQuantite(quantite);
+		ajaxResponseRenderer.addRender("ArticlesZone_" + i, articlesZone)
+				.addRender("totalZone", totalZone);
+	}
+
 	@OnEvent(component = "remise", value = UpdateZone.DEFAULT_EVENT)
-	public Object onChangeFromRemise(
-			@RequestParameter(value = "remise", allowBlank = true) Double remise) {
-		this.fieldValue.article.setRemise(remise);
-		return articlesZone.getBody();
+	public void onChangeFromRemise(
+			@RequestParameter(value = "remise", allowBlank = true) Double remise,
+			int i) {
+		this.piece.getArticles().get(i).setRemise(remise);
+		ajaxResponseRenderer.addRender("ArticlesZone_" + i, articlesZone)
+				.addRender("totalZone", totalZone);
 	}
 
 	@OnEvent(component = "prixUnitaire", value = UpdateZone.DEFAULT_EVENT)
-	public Object onChangeFromPrixUnitaire(
-			@RequestParameter(value = "prixUnitaire", allowBlank = true) Double prixUnitaire) {
-		this.fieldValue.article.setPrixUnitaire(prixUnitaire);
-		return articlesZone.getBody();
+	public void onChangeFromPrixUnitaire(
+			@RequestParameter(value = "prixUnitaire", allowBlank = true) Double prixUnitaire,
+			int i) {
+		this.piece.getArticles().get(i).setPrixUnitaire(prixUnitaire);
+		ajaxResponseRenderer.addRender("ArticlesZone_" + i, articlesZone)
+				.addRender("totalZone", totalZone);
 	}
 
 	public String getArticlesZoneId() {
 		return "ArticlesZone_" + fieldValue.order;
+	}
+
+	public Double getTotal() {
+		return piece.getTotal();
 	}
 
 	public SelectModel getListeItem() {

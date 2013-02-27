@@ -30,12 +30,13 @@
 				        
 					      <t:ajaxformloop t:id="articlesLoop" id="articlesLoop" source="holder.values" value="fieldValue" encoder="holder.encoder">
 					      
-							      <t:Select t:id="item" value="fieldValue.article.item" model="listeItem"  />
-							      qte <t:textfield t:id="quantite" id="quantite" value="fieldValue.article.quantite" type="number" min="0"/>
-							      Remise <t:textfield t:id="remise" id="remise" value="fieldValue.article.remise" t:mixins="updatezone" t:zone="prop:articlesZoneId"  /> 
-							      PU <t:textfield t:id="prixUnitaire" id="prixUnitaire" value="fieldValue.article.prixUnitaire" t:mixins="updatezone"  t:zone="prop:articlesZoneId" />  
+							      <t:Select t:id="item" value="fieldValue.article.item" model="listeItem" />
+							      qte <t:textfield t:id="quantite" id="quantite" value="fieldValue.article.quantite" type="number" min="0" context="prop:fieldValue.order" t:mixins="updatezone" t:zone="prop:articlesZoneId" />
+							      Remise <t:textfield t:id="remise" id="remise" value="fieldValue.article.remise" context="prop:fieldValue.order" t:mixins="updatezone" t:zone="prop:articlesZoneId"  /> 
+							      PU <t:textfield t:id="prixUnitaire" id="prixUnitaire" value="fieldValue.article.prixUnitaire" t:mixins="updatezone" context="prop:fieldValue.order"  t:zone="prop:articlesZoneId" />  
 							      <t:zone t:id="articlesZone" id="prop:articlesZoneId">
 							      	PU remise ${fieldValue.article.prixUnitaireRemiser}
+							      	Total ${fieldValue.article.total}
 							      </t:zone>
 						          |
 						          <t:removerowlink>remove</t:removerowlink>
@@ -50,4 +51,7 @@
 	      </div>
 	    </t:form>
     </t:zone>
+    <t:zone t:id="totalZone" id="totalZone">	  	
+	  	Total ${total}
+	</t:zone>
 </div>
