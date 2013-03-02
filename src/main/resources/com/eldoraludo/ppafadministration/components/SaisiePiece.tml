@@ -1,57 +1,116 @@
 <div xmlns:t="http://tapestry.apache.org/schema/tapestry_5_3.xsd" xmlns:p="tapestry:parameter">
-   <t:zone t:id="saisiePieceFormZone" id="saisiePieceFormZone">
-	   <t:form t:id="saisiePieceForm" clientValidation="submit"
-                    t:zone="saisiePieceFormZone">
-		  <t:hidden value="typeSauvegarder"/>
-	      <t:errors/>
-	
-	      <div class="t-beaneditor">
-	
-			<table>
-					<tr>
-						<th><t:label for="client"/>:</th>
-						<td><t:Select t:id="client" value="piece.client" model="listeClient" /></td>
-					</tr>
-					<tr>
-						<th><t:label for="date"/>:</th>
-						<td><input t:type="DateField" t:id="date" value="piece.date" t:format="dd/MM/yyyy" t:validate="required" size="10"/></td>
-					</tr>
-					<tr>
-						<th><t:label for="numeroPiece"/>:</th>
-						<td><t:textfield t:id="numeroPiece" id="numeroPiece" value="piece.numeroPiece"/></td>
-					</tr>
-					<tr>
-						<th><t:label for="type"/>:</th>
-						<td><input t:type="Select" t:id="type" value="piece.type"/></td>
-					</tr>
-					<tr>
-				        <th> <h2>Articles</h2></th>
-				        <td>
-				        
-					      <t:ajaxformloop t:id="articlesLoop" id="articlesLoop" source="holder.values" value="fieldValue" encoder="holder.encoder">
-					      
-							      <t:Select t:id="item" value="fieldValue.article.item" model="listeItem" />
-							      qte <t:textfield t:id="quantite" id="quantite" value="fieldValue.article.quantite" type="number" min="0" context="prop:fieldValue.order" t:mixins="updatezone" t:zone="prop:articlesZoneId" />
-							      Remise <t:textfield t:id="remise" id="remise" value="fieldValue.article.remise" context="prop:fieldValue.order" t:mixins="updatezone" t:zone="prop:articlesZoneId"  /> 
-							      PU <t:textfield t:id="prixUnitaire" id="prixUnitaire" value="fieldValue.article.prixUnitaire" t:mixins="updatezone" context="prop:fieldValue.order"  t:zone="prop:articlesZoneId" />  
-							      <t:zone t:id="articlesZone" id="prop:articlesZoneId">
-							      	PU remise ${fieldValue.article.prixUnitaireRemiser}
-							      	Total ${fieldValue.article.total}
-							      </t:zone>
-						          |
-						          <t:removerowlink>remove</t:removerowlink>
-					        </t:ajaxformloop>
-					        
-						</td>
-				</tr>
-	 		</table>
-	        <p>
-	          <input type="submit" value="Update"/>
-	        </p>
-	      </div>
-	    </t:form>
+    <t:zone t:id="saisiePieceFormZone" id="saisiePieceFormZone">
+        <t:form t:id="saisiePieceForm" clientValidation="submit"
+                t:zone="saisiePieceFormZone">
+            <t:hidden value="typeSauvegarder"/>
+            <t:errors/>
+            <style type="text/css">
+                .saisiepiece_separation_block table th
+                {
+                width:125px;
+                }
+            </style>
+            <div class="t-beaneditor">
+                <div class="saisiepiece_separation_block">
+                    <table>
+                        <tr>
+                            <th>
+                                <t:label for="client"/>
+                                :
+                            </th>
+                            <td>
+                                <t:Select t:id="client" value="piece.client" model="listeClient"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>
+                                <t:label for="date"/>
+                                :
+                            </th>
+                            <td><input t:type="DateField" t:id="date" value="piece.date" t:format="dd/MM/yyyy"
+                                       t:validate="required" size="10"/></td>
+                        </tr>
+                        <tr>
+                            <th>
+                                <t:label for="numeroPiece"/>
+                                :
+                            </th>
+                            <td>
+                                <t:textfield t:id="numeroPiece" id="numeroPiece" value="piece.numeroPiece"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>
+                                <t:label for="type"/>
+                                :
+                            </th>
+                            <td><input t:type="Select" t:id="type" value="piece.type" t:zone="typeFactureOuAvoirZone"/></td>
+                        </tr>
+                        <tr>
+                            <th>
+                                <t:label for="commentaire"/>
+                                :
+                            </th>
+                            <td>
+                                <t:textArea t:id="commentaire" id="commentaire" value="piece.commentaire"/>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="saisiepiece_separation_block">
+                    <t:zone t:id="typeFactureOuAvoirZone" id="typeFactureOuAvoirZone">
+                        <table>
+                            <t:if test="typeFactureOuAvoir">
+                                <tr>
+                                    <th>
+                                        <t:label for="pieceLie"/>
+                                        :
+                                    </th>
+                                    <td>
+                                        <t:Select t:id="pieceLie" value="piece.pieceLie" model="listePieceLie"/>
+                                    </td>
+                                </tr>
+                            </t:if>
+                        </table>
+                    </t:zone>
+                </div>
+                <div class="saisiepiece_separation_block">
+                    <table>
+                        <tr>
+                            <th><h2>Articles</h2></th>
+                            <td>
+
+                                <t:ajaxformloop t:id="articlesLoop" id="articlesLoop" source="holder.values"
+                                                value="fieldValue" encoder="holder.encoder">
+
+                                    <t:Select t:id="item" value="fieldValue.article.item" model="listeItem"/>
+                                    qte
+                                    <t:textfield t:id="quantite" id="quantite" value="fieldValue.article.quantite"
+                                                 type="number" min="0"/>
+                                    <!-- context="prop:fieldValue.order" t:mixins="updatezone" t:zone="prop:articlesZoneId"  -->
+                                    Remise
+                                    <t:textfield t:id="remise" id="remise" value="fieldValue.article.remise"/>
+                                    PU
+                                    <t:textfield t:id="prixUnitaire" id="prixUnitaire"
+                                                 value="fieldValue.article.prixUnitaire"/>
+                                    <!--  <t:zone t:id="articlesZone" id="prop:articlesZoneId">
+                                                  PU remise ${fieldValue.article.prixUnitaireRemiser}
+                                                  Total ${fieldValue.article.total}
+                                              </t:zone>          -->
+                                    |
+                                    <t:removerowlink>remove</t:removerowlink>
+                                </t:ajaxformloop>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <p>
+                    <input type="submit" value="Update"/>
+                </p>
+            </div>
+        </t:form>
     </t:zone>
-    <t:zone t:id="totalZone" id="totalZone">	  	
-	  	Total ${total}
-	</t:zone>
+    <t:zone t:id="totalZone" id="totalZone">
+        Total ${total}
+    </t:zone>
 </div>

@@ -18,81 +18,106 @@ import org.apache.tapestry5.beaneditor.Validate;
 @Entity
 public class Piece {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@NonVisual
-	private Long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @NonVisual
+    private Long id;
 
-	@Validate("required")
-	@ManyToOne
-	private Client client;
+    @Validate("required")
+    @ManyToOne
+    private Client client;
 
-	@Validate("required")
-	private Date date;
+    @Validate("required")
+    private Date date;
 
-	@Validate("required")
-	private String numeroPiece;
+    @Validate("required")
+    private String numeroPiece;
 
-	@Validate("required")
-	private TypePiece type;
+    @ManyToOne
+    private Piece pieceLie;
 
-	@OneToMany(mappedBy = "piece", cascade = CascadeType.ALL)
-	private List<Article> articles = new ArrayList<Article>();
+    private String commentaire;
 
-	public List<Article> getArticles() {
-		return articles;
-	}
+    @Validate("required")
+    private TypePiece type;
 
-	public void setArticles(List<Article> articles) {
-		this.articles = articles;
-	}
+    @OneToMany(mappedBy = "piece", cascade = CascadeType.ALL)
+    private List<Article> articles = new ArrayList<Article>();
 
-	public Long getId() {
-		return id;
-	}
+    public List<Article> getArticles() {
+        return articles;
+    }
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+    public void setArticles(List<Article> articles) {
+        this.articles = articles;
+    }
 
-	public Client getClient() {
-		return client;
-	}
+    public Long getId() {
+        return id;
+    }
 
-	public void setClient(Client client) {
-		this.client = client;
-	}
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-	public Date getDate() {
-		return date;
-	}
+    public Client getClient() {
+        return client;
+    }
 
-	public void setDate(Date date) {
-		this.date = date;
-	}
+    public void setClient(Client client) {
+        this.client = client;
+    }
 
-	public String getNumeroPiece() {
-		return numeroPiece;
-	}
+    public Date getDate() {
+        return date;
+    }
 
-	public void setNumeroPiece(String numeroPiece) {
-		this.numeroPiece = numeroPiece;
-	}
+    public void setDate(Date date) {
+        this.date = date;
+    }
 
-	public TypePiece getType() {
-		return type;
-	}
+    public String getNumeroPiece() {
+        return numeroPiece;
+    }
 
-	public void setType(TypePiece type) {
-		this.type = type;
-	}
-	
-	public Double getTotal() {
-		Double total = 0.0;
-		for (Article article : articles) {
-			total += article.getTotal();
-		}
-		return total;
-	}
+    public void setNumeroPiece(String numeroPiece) {
+        this.numeroPiece = numeroPiece;
+    }
+
+    public TypePiece getType() {
+        return type;
+    }
+
+    public void setType(TypePiece type) {
+        this.type = type;
+    }
+
+    public String getCommentaire() {
+        return commentaire;
+    }
+
+    public void setCommentaire(String commentaire) {
+        this.commentaire = commentaire;
+    }
+
+    public Piece getPieceLie() {
+        return pieceLie;
+    }
+
+    public void setPieceLie(Piece pieceLie) {
+        this.pieceLie = pieceLie;
+    }
+
+    public Double getTotal() {
+        Double total = 0.0;
+        for (Article article : articles) {
+            total += article.getTotal();
+        }
+        return total;
+    }
+
+    public String prettyString() {
+        return numeroPiece;
+    }
 
 }
