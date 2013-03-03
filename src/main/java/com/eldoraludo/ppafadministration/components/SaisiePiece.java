@@ -22,6 +22,7 @@ import org.apache.tapestry5.annotations.Property;
 import org.apache.tapestry5.annotations.RequestParameter;
 import org.apache.tapestry5.annotations.SetupRender;
 import org.apache.tapestry5.beaneditor.Validate;
+import org.apache.tapestry5.corelib.components.ActionLink;
 import org.apache.tapestry5.corelib.components.Form;
 import org.apache.tapestry5.corelib.components.Zone;
 import org.apache.tapestry5.hibernate.annotations.CommitAfter;
@@ -34,6 +35,7 @@ import org.apache.tapestry5.ioc.internal.util.CollectionFactory;
 import org.apache.tapestry5.services.SelectModelFactory;
 import org.apache.tapestry5.services.ajax.AjaxResponseRenderer;
 import org.hibernate.Session;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.joda.time.DateMidnight;
 
@@ -46,8 +48,8 @@ import com.eldoraludo.ppafadministration.mixins.UpdateZone;
 import com.eldoraludo.ppafadministration.pages.GestionPiece;
 import com.eldoraludo.ppafadministration.support.AjaxLoopHolder;
 
-//http://tapestry5-jquery.com/core/docsajaxformloop
-//http://tawus.wordpress.com/2011/07/26/tapestry-ajaxformloop/
+//http://tapestry5-jquery.com/core/
+// TODO TO TRY http://tawus.wordpress.com/2011/07/26/tapestry-ajaxformloop/
 //http://jumpstart.doublenegative.com.au/jumpstart/examples/ajax/formloop1
 //http://tapestry.apache.org/current/apidocs/org/apache/tapestry5/corelib/components/AjaxFormLoop.html
 // TODO voir pourquoi on doit ajouter une ligne dans le holder et dans l'objet
@@ -59,6 +61,10 @@ public class SaisiePiece {
     @Property
     @Persist
     private Piece piece;
+
+    @Property
+    @Persist
+    private Piece pieceLie;
 
     @Property
     @Persist
@@ -99,6 +105,13 @@ public class SaisiePiece {
     @InjectComponent
     private Zone totalZone;
 
+    @InjectComponent
+    private Zone articlesZone;
+
+    @InjectComponent
+    @Property
+    private ActionLink importerArticlesDepuisPieceLie;
+
     @SetupRender
     public void setupRender() {
         holder = new AjaxLoopHolder<FieldValue>();
@@ -121,8 +134,39 @@ public class SaisiePiece {
         }
     }
 
+    @OnEvent(component = "importerArticlesDepuisPieceLie", value = EventConstants.ACTION)
+    public void onActionFromImporterArticlesDepuisPieceLie() {
+//        Piece pieceLie = (Piece) session.get(Piece.class, piece.getPieceLie().getId());
+        List<Article> pieceLieArticles = session.createCriteria(Article.class).list();
+        for (Article pieceLieArticle : pieceLieArticles) {
+            if (!pieceLieArticle.getPiece().equals(pieceLie)) {
+                continue;
+            }
+            FieldValue value = new FieldValue();
+            value.order = getMaxIndexInHolder() + 1;
+            Article article = new Article();
+            article.setInfo(pieceLieArticle.getInfo());
+            article.setItem(pieceLieArticle.getItem());
+            article.setPieceDOrigine(pieceLieArticle.getPiece().prettyString());
+            article.setPrixUnitaire(pieceLieArticle.getPrixUnitaire());
+            article.setQuantite(pieceLieArticle.getQuantite());
+            article.setRemise(pieceLieArticle.getRemise());
+            article.setPiece(this.piece);
+            value.article = article;
+            holder.add(value);
+            this.piece.getArticles().add(value.article);
+        }
+        ajaxResponseRenderer.addRender(articlesZone);
+    }
+
     @OnEvent(value = EventConstants.VALUE_CHANGED, component = "type")
     public void onValueChangedFromType() {
+        ajaxResponseRenderer.addRender(typeFactureOuAvoirZone);
+    }
+
+    @OnEvent(value = EventConstants.VALUE_CHANGED, component = "pieceLie")
+    public void onValueChangedFromPieceLie(Piece pieceLie) {
+        this.pieceLie = pieceLie;
         ajaxResponseRenderer.addRender(typeFactureOuAvoirZone);
     }
 
@@ -214,13 +258,13 @@ public class SaisiePiece {
 
     /*
      @InjectComponent
-     private Zone articlesZone;
+     private Zone prixUnitaireRemiserZone;
      @OnEvent(component = "quantite", value = UpdateZone.DEFAULT_EVENT)
      public void onChangeFromQuantite(
              @RequestParameter(value = "quantite", allowBlank = true) Double quantite,
              int i) {
          this.piece.getArticles().get(i).setQuantite(quantite);
-         ajaxResponseRenderer.addRender("ArticlesZone_" + i, articlesZone)
+         ajaxResponseRenderer.addRender("prixUnitaireRemiserZone_" + i, prixUnitaireRemiserZone)
                  .addRender("totalZone", totalZone);
      }
 
@@ -229,7 +273,7 @@ public class SaisiePiece {
              @RequestParameter(value = "remise", allowBlank = true) Double remise,
              int i) {
          this.piece.getArticles().get(i).setRemise(remise);
-         ajaxResponseRenderer.addRender("ArticlesZone_" + i, articlesZone)
+         ajaxResponseRenderer.addRender("prixUnitaireRemiserZone_" + i, prixUnitaireRemiserZone)
                  .addRender("totalZone", totalZone);
      }
 
@@ -238,12 +282,12 @@ public class SaisiePiece {
              @RequestParameter(value = "prixUnitaire", allowBlank = true) Double prixUnitaire,
              int i) {
          this.piece.getArticles().get(i).setPrixUnitaire(prixUnitaire);
-         ajaxResponseRenderer.addRender("ArticlesZone_" + i, articlesZone)
+         ajaxResponseRenderer.addRender("prixUnitaireRemiserZone_" + i, prixUnitaireRemiserZone)
                  .addRender("totalZone", totalZone);
      }*/
 
-    /*public String getArticlesZoneId() {
-         return "ArticlesZone_" + fieldValue.order;
+    /*public String getPrixUnitaireRemiserZoneId() {
+         return "prixUnitaireRemiserZone_" + fieldValue.order;
      }*/
 
     public Double getTotal() {
@@ -261,7 +305,7 @@ public class SaisiePiece {
 
     public SelectModel getListePieceLie() {
         List<Piece> pieceLies = session.createCriteria(Piece.class).add(Restrictions.or
-                (Restrictions.eq("type", TypePiece.Depot), Restrictions.eq("type", TypePiece.Livraison))).list();
+                (Restrictions.eq("type", TypePiece.Depot), Restrictions.eq("type", TypePiece.Livraison))).addOrder(Order.asc("type")).list();
         List<OptionModel> options = CollectionFactory.newList();
         for (Piece pieceLie : pieceLies) {
             options.add(new OptionModelImpl(pieceLie.prettyString(), pieceLie));

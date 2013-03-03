@@ -12,102 +12,112 @@ import org.apache.tapestry5.beaneditor.Validate;
 @Entity
 public class Article implements Comparable<Article> {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@NonVisual
-	private Long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @NonVisual
+    private Long id;
 
-	@Validate("required")
-	@ManyToOne(optional = false)
-	private Item item;
+    @Validate("required")
+    @ManyToOne(optional = false)
+    private Item item;
 
-	private String info;
+    private String info;
 
-	private Double quantite;
+    private Double quantite;
 
-	@Validate("required")
-	private Double prixUnitaire;
+    @Validate("required")
+    private Double prixUnitaire;
 
-	private Double remise;
+    private Double remise;
 
-	@Validate("required")
-	@ManyToOne(optional = false)
-	private Piece piece;
+    private String pieceDOrigine;
 
-	public Double getPrixUnitaireRemiser() {
-		if (remise != null && prixUnitaire != null) {
-			return (prixUnitaire - prixUnitaire * remise / 100);
-		}
-		return prixUnitaire;
-	}
+    @Validate("required")
+    @ManyToOne(optional = false)
+    private Piece piece;
 
-	public Double getTotal() {
-		Double prixUnitaireRemiser = getPrixUnitaireRemiser();
-		if (prixUnitaireRemiser != null && this.quantite != null) {
-			return prixUnitaireRemiser * this.quantite;
-		}
-		return null;
-	}
+    public Double getPrixUnitaireRemiser() {
+        if (remise != null && prixUnitaire != null) {
+            return (prixUnitaire - prixUnitaire * remise / 100);
+        }
+        return prixUnitaire;
+    }
 
-	public Long getId() {
-		return id;
-	}
+    public Double getTotal() {
+        Double prixUnitaireRemiser = getPrixUnitaireRemiser();
+        if (prixUnitaireRemiser != null && this.quantite != null) {
+            return prixUnitaireRemiser * this.quantite;
+        }
+        return null;
+    }
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+    public Long getId() {
+        return id;
+    }
 
-	public Item getItem() {
-		return item;
-	}
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-	public void setItem(Item item) {
-		this.item = item;
-	}
+    public Item getItem() {
+        return item;
+    }
 
-	public String getInfo() {
-		return info;
-	}
+    public void setItem(Item item) {
+        this.item = item;
+    }
 
-	public void setInfo(String info) {
-		this.info = info;
-	}
+    public String getInfo() {
+        return info;
+    }
 
-	public Double getQuantite() {
-		return quantite;
-	}
+    public void setInfo(String info) {
+        this.info = info;
+    }
 
-	public void setQuantite(Double quantite) {
-		this.quantite = quantite;
-	}
+    public Double getQuantite() {
+        return quantite;
+    }
 
-	public Double getPrixUnitaire() {
-		return prixUnitaire;
-	}
+    public void setQuantite(Double quantite) {
+        this.quantite = quantite;
+    }
 
-	public void setPrixUnitaire(Double prixUnitaire) {
-		this.prixUnitaire = prixUnitaire;
-	}
+    public Double getPrixUnitaire() {
+        return prixUnitaire;
+    }
 
-	public Double getRemise() {
-		return remise;
-	}
+    public void setPrixUnitaire(Double prixUnitaire) {
+        this.prixUnitaire = prixUnitaire;
+    }
 
-	public void setRemise(Double remise) {
-		this.remise = remise;
-	}
+    public Double getRemise() {
+        return remise;
+    }
 
-	public Piece getPiece() {
-		return piece;
-	}
+    public void setRemise(Double remise) {
+        this.remise = remise;
+    }
 
-	public void setPiece(Piece piece) {
-		this.piece = piece;
-	}
+    public Piece getPiece() {
+        return piece;
+    }
 
-	public int compareTo(Article o) {
-		// TODO Auto-generated method stub
-		return this.info.compareTo(o.info);
-	}
+    public void setPiece(Piece piece) {
+        this.piece = piece;
+    }
+
+    public String getPieceDOrigine() {
+        return pieceDOrigine;
+    }
+
+    public void setPieceDOrigine(String pieceDOrigine) {
+        this.pieceDOrigine = pieceDOrigine;
+    }
+
+    public int compareTo(Article o) {
+        // TODO Auto-generated method stub
+        return this.info.compareTo(o.info);
+    }
 
 }

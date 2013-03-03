@@ -117,7 +117,30 @@ public class Piece {
     }
 
     public String prettyString() {
-        return numeroPiece;
+        return new StringBuilder(numeroPiece).append(" - ").append(type).toString();
     }
 
+    @Override
+    public boolean equals(Object o) {
+
+        if (this == o) {
+            return true;
+        }
+
+        if (o == null) {
+            return false;
+        }
+
+        Piece that = (Piece) o;
+
+        if (!this.getNumeroPiece().equals(that.getNumeroPiece())) {
+            return false;
+        }
+
+        if (this.getId() == null || that.getId() == null) {
+            return this == o;
+        }
+
+        return this.getId().equals(that.getId());
+    }
 }

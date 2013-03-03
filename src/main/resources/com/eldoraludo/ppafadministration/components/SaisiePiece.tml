@@ -67,43 +67,48 @@
                                         :
                                     </th>
                                     <td>
-                                        <t:Select t:id="pieceLie" value="piece.pieceLie" model="listePieceLie"/>
+                                       <t:Select t:id="pieceLie" id="pieceLie" value="piece.pieceLie" model="listePieceLie" t:zone="typeFactureOuAvoirZone"/>
+                                    </td>
+                                    <td>
+                                        <t:actionlink t:id="importerArticlesDepuisPieceLie" id="importerArticlesDepuisPieceLie" t:zone="articlesZone">Importer</t:actionlink>
                                     </td>
                                 </tr>
                             </t:if>
                         </table>
                     </t:zone>
                 </div>
-                <div class="saisiepiece_separation_block">
-                    <table>
-                        <tr>
-                            <th><h2>Articles</h2></th>
-                            <td>
+                <t:zone t:id="articlesZone" id="articlesZone">
+                    <div class="saisiepiece_separation_block">
+                        <table>
+                            <tr>
+                                <th><h2>Articles</h2></th>
+                                <td>
+                                    <t:ajaxformloop t:id="articlesLoop" id="articlesLoop" source="holder.values"
+                                                    value="fieldValue" encoder="holder.encoder">
 
-                                <t:ajaxformloop t:id="articlesLoop" id="articlesLoop" source="holder.values"
-                                                value="fieldValue" encoder="holder.encoder">
-
-                                    <t:Select t:id="item" value="fieldValue.article.item" model="listeItem"/>
-                                    qte
-                                    <t:textfield t:id="quantite" id="quantite" value="fieldValue.article.quantite"
-                                                 type="number" min="0"/>
-                                    <!-- context="prop:fieldValue.order" t:mixins="updatezone" t:zone="prop:articlesZoneId"  -->
-                                    Remise
-                                    <t:textfield t:id="remise" id="remise" value="fieldValue.article.remise"/>
-                                    PU
-                                    <t:textfield t:id="prixUnitaire" id="prixUnitaire"
-                                                 value="fieldValue.article.prixUnitaire"/>
-                                    <!--  <t:zone t:id="articlesZone" id="prop:articlesZoneId">
-                                                  PU remise ${fieldValue.article.prixUnitaireRemiser}
-                                                  Total ${fieldValue.article.total}
-                                              </t:zone>          -->
-                                    |
-                                    <t:removerowlink>remove</t:removerowlink>
-                                </t:ajaxformloop>
-                            </td>
-                        </tr>
-                    </table>
-                </div>
+                                        <t:Select t:id="item" value="fieldValue.article.item" model="listeItem"/>
+                                        qte
+                                        <t:textfield t:id="quantite" id="quantite" value="fieldValue.article.quantite"
+                                                     type="number" min="0"/>
+                                        <!-- context="prop:fieldValue.order" t:mixins="updatezone" t:zone="prop:prixUnitaireRemiserZoneId"  -->
+                                        Remise
+                                        <t:textfield t:id="remise" id="remise" value="fieldValue.article.remise"/>
+                                        PU
+                                        <t:textfield t:id="prixUnitaire" id="prixUnitaire"
+                                                     value="fieldValue.article.prixUnitaire"/>
+                                        <!--  <t:zone t:id="prixUnitaireRemiserZone" id="prop:prixUnitaireRemiserZoneId">
+                                                      PU remise ${fieldValue.article.prixUnitaireRemiser}
+                                                      Total ${fieldValue.article.total}
+                                                  </t:zone>          -->
+                                        ${fieldValue.article.pieceDOrigine}
+                                        |
+                                        <t:removerowlink>remove</t:removerowlink>
+                                    </t:ajaxformloop>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+               </t:zone>
                 <p>
                     <input type="submit" value="Update"/>
                 </p>
