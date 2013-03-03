@@ -1,7 +1,7 @@
-<html t:type="layout" title="About ppafadministration"
+<html t:type="layout" title="About"
       xmlns:t="http://tapestry.apache.org/schema/tapestry_5_3.xsd"
       xmlns:p="tapestry:parameter">
 
-    <p>About ppafadministration application ...</p>
+    <p><a href="mailto:ludovic_chacon@hotmail.com">Envoyer un mail à Ludo si problème</a></p>
 
 </html>
