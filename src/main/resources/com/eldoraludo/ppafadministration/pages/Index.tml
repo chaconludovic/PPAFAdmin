@@ -1,7 +1,9 @@
 <html t:type="layout" title="Accueil"
       xmlns:t="http://tapestry.apache.org/schema/tapestry_5_3.xsd"
       xmlns:p="tapestry:parameter">
-        <!-- Most of the page content, including <head>, <body>, etc. tags, comes from Layout.tml -->
+
+      <h1>Demo</h1>
+      	<div t:clientId="container2" t:type="MyOwnChart"/>
 
     <p>${message:greeting}</p>
 

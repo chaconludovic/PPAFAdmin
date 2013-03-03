@@ -116,6 +116,11 @@ of testing facilities designed for use with TestNG (http://testng.org/), so it's
             <artifactId>guava</artifactId>
             <version>${guava-version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.got5</groupId>
+            <artifactId>tapestry5-highcharts</artifactId>
+            <version>1.2.0</version>
+        </dependency>
     </dependencies>
     <build>
         <finalName>ppafadministration</finalName>
