@@ -3,6 +3,14 @@
 *.project
 *.classpath
 
+# idea files #
+######################
+.idea
+.settings
+*.iml
+*.ipr
+*.iws
+
 # Compiled source #
 ###################
 *.com
@@ -12,7 +20,8 @@
 *.o
 *.so
 *.class
-target/*
+**/target/*
+**/tmp/generated-sources/*
 
 # Settings #
 .settings/*
