@@ -10,13 +10,13 @@
 					marginBottom: 25
 				},
 				title: {
-					text: 'Monthly Average Temperature',
+					text: 'Nombre d\'article vendu',
 					x: -20 //center
 				},
-				xAxis: {
+				/*xAxis: {
 					categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
 						'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
-				},
+				},*/
 				yAxis: {
 					/*title: {
 						text: 'Temperature (Â°C)'
@@ -30,7 +30,7 @@
 				tooltip: {
 					formatter: function() {
 							return '<b>'+ this.series.name +'</b><br/>'+
-							this.x +': '+ this.y +'Â°C';
+							this.x +': '+ this.y +' articles';
 					}
 				},
 				legend: {
