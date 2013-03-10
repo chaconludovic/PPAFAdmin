@@ -133,6 +133,15 @@ public class Piece {
 
         Piece that = (Piece) o;
 
+        if (this.getNumeroPiece() == null && that.getNumeroPiece() != null ||
+                this.getNumeroPiece() != null && that.getNumeroPiece() == null) {
+            return false;
+        }
+
+        if (this.getNumeroPiece() == null && that.getNumeroPiece() == null) {
+            return true;
+        }
+
         if (!this.getNumeroPiece().equals(that.getNumeroPiece())) {
             return false;
         }

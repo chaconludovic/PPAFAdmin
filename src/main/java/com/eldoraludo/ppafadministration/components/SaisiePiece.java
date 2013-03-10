@@ -131,6 +131,7 @@ public class SaisiePiece {
             this.piece = new Piece();
             this.piece.setNumeroPiece(DateMidnight.now().toString("YYYYMMdd")
                     + "_");
+            this.piece.setDate(DateMidnight.now().toDate());
         }
     }
 

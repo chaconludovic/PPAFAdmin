@@ -27,7 +27,7 @@
                                 <t:label for="date"/>
                                 :
                             </th>
-                            <td><input t:type="DateField" t:id="date" value="piece.date" t:format="dd/MM/yyyy"
+                            <td><input t:type="DateField" t:id="date" value="piece.date" t:format="dd-MM-yyyy"
                                        t:validate="required" size="10"/></td>
                         </tr>
                         <tr>
