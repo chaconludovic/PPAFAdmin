@@ -44,7 +44,12 @@
                                 <t:label for="type"/>
                                 :
                             </th>
-                            <td><input t:type="Select" t:id="type" value="piece.type" t:zone="typeFactureOuAvoirZone"/></td>
+                            <t:if test="modeSaisieType">
+                                <td><input t:type="Select" t:id="type" value="piece.type" model="listeTypePiece" t:zone="typeFactureOuAvoirZone"/></td>
+                                <p:else>
+                                    <td>${piece.type}</td>
+                                </p:else>
+                            </t:if>
                         </tr>
                         <tr>
                             <th>

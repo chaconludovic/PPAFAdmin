@@ -4,22 +4,19 @@ import static org.apache.commons.lang.builder.EqualsBuilder.reflectionEquals;
 import static org.apache.commons.lang.builder.HashCodeBuilder.reflectionHashCode;
 import static org.apache.commons.lang.builder.ToStringBuilder.reflectionToString;
 
-import java.util.HashMap;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 
-import org.apache.commons.collections.map.HashedMap;
 import org.apache.tapestry5.EventConstants;
 import org.apache.tapestry5.OptionModel;
 import org.apache.tapestry5.SelectModel;
 import org.apache.tapestry5.annotations.InjectComponent;
 import org.apache.tapestry5.annotations.InjectPage;
-import org.apache.tapestry5.annotations.Log;
 import org.apache.tapestry5.annotations.OnEvent;
 import org.apache.tapestry5.annotations.Parameter;
 import org.apache.tapestry5.annotations.Persist;
 import org.apache.tapestry5.annotations.Property;
-import org.apache.tapestry5.annotations.RequestParameter;
 import org.apache.tapestry5.annotations.SetupRender;
 import org.apache.tapestry5.beaneditor.Validate;
 import org.apache.tapestry5.corelib.components.ActionLink;
@@ -30,7 +27,6 @@ import org.apache.tapestry5.internal.OptionModelImpl;
 import org.apache.tapestry5.internal.SelectModelImpl;
 import org.apache.tapestry5.ioc.Messages;
 import org.apache.tapestry5.ioc.annotations.Inject;
-import org.apache.tapestry5.ioc.annotations.Symbol;
 import org.apache.tapestry5.ioc.internal.util.CollectionFactory;
 import org.apache.tapestry5.services.SelectModelFactory;
 import org.apache.tapestry5.services.ajax.AjaxResponseRenderer;
@@ -44,7 +40,6 @@ import com.eldoraludo.ppafadministration.entities.Client;
 import com.eldoraludo.ppafadministration.entities.Item;
 import com.eldoraludo.ppafadministration.entities.Piece;
 import com.eldoraludo.ppafadministration.entities.TypePiece;
-import com.eldoraludo.ppafadministration.mixins.UpdateZone;
 import com.eldoraludo.ppafadministration.pages.GestionPiece;
 import com.eldoraludo.ppafadministration.support.AjaxLoopHolder;
 
@@ -112,6 +107,9 @@ public class SaisiePiece {
     @Property
     private ActionLink importerArticlesDepuisPieceLie;
 
+    @Property
+    private Boolean modeSaisieType;
+
     @SetupRender
     public void setupRender() {
         holder = new AjaxLoopHolder<FieldValue>();
@@ -127,12 +125,24 @@ public class SaisiePiece {
                     holder.add(value);
                 }
             }
+            if (estEnModeSaisieTypePiecePourModification(piece)) {
+                modeSaisieType = true;
+            } else {
+                modeSaisieType = false;
+            }
+
         } else {
             this.piece = new Piece();
             this.piece.setNumeroPiece(DateMidnight.now().toString("YYYYMMdd")
                     + "_");
             this.piece.setDate(DateMidnight.now().toDate());
+            modeSaisieType = true;
         }
+    }
+
+    private boolean estEnModeSaisieTypePiecePourModification(Piece piece) {
+        TypePiece type = piece.getType();
+        return type.equals(TypePiece.Livraison) || type.equals(TypePiece.Depot);
     }
 
     @OnEvent(component = "importerArticlesDepuisPieceLie", value = EventConstants.ACTION)
@@ -317,6 +327,22 @@ public class SaisiePiece {
     public SelectModel getListeClient() {
         List<Client> clients = session.createCriteria(Client.class).list();
         return selectModelFactory.create(clients, "nom");
+    }
+
+    public SelectModel getListeTypePiece() {
+        if (estEnModeSaisieTypePiecePourModification(piece)) {
+            List<OptionModel> options = new ArrayList<OptionModel>();
+            options.add(new OptionModelImpl(TypePiece.Facture.name(), TypePiece.Facture));
+            options.add(new OptionModelImpl(TypePiece.Avoir.name(), TypePiece.Avoir));
+            return new SelectModelImpl(null, options);
+        } else {
+            List<OptionModel> options = new ArrayList<OptionModel>();
+            options.add(new OptionModelImpl(TypePiece.Depot.name(), TypePiece.Depot));
+            options.add(new OptionModelImpl(TypePiece.Livraison.name(), TypePiece.Livraison));
+            options.add(new OptionModelImpl(TypePiece.Facture.name(), TypePiece.Facture));
+            options.add(new OptionModelImpl(TypePiece.Avoir.name(), TypePiece.Avoir));
+            return new SelectModelImpl(null, options);
+        }
     }
 
     public static class FieldValue implements Comparable<FieldValue> {
