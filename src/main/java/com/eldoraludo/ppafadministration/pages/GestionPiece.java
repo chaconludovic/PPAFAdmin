@@ -1,5 +1,7 @@
 package com.eldoraludo.ppafadministration.pages;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Collection;
 import java.util.List;
 
@@ -49,7 +51,6 @@ public class GestionPiece {
 		model.add("client").label("client").sortable(true);
 		model.addEmpty("modifiePiece").label("Modifier une pièce");
 		model.addEmpty("prixremise").label("Prix remise");
-//		model.addEmpty("total").label("Total");
 		model.include("date", "client", "numeroPiece", "type", "total",
 				"modifiePiece");
 
@@ -78,6 +79,11 @@ public class GestionPiece {
 	}
 
 	public Double getTotal() {
-		return piece.getTotal();
+        if (piece.getTotal()==null){
+            return null;
+        }
+        BigDecimal bd = new BigDecimal(piece.getTotal());
+        BigDecimal rounded = bd.setScale(2, RoundingMode.HALF_EVEN);
+        return rounded.doubleValue();
 	}
 }
