@@ -52,61 +52,44 @@ public class SaisiePiece {
 
     @Parameter(required = false)
     private Long id;
-
     @Property
     @Persist
     private Piece piece;
-
     @Property
     @Persist
     private Piece pieceLie;
-
     @Property
     @Persist
     private FieldValue fieldValue;
-
     @Inject
     private Session session;
-
     @InjectPage
     private GestionPiece gestionPiece;
-
     @Inject
     private SelectModelFactory selectModelFactory;
-
     @Property
     @Persist
     private AjaxLoopHolder<FieldValue> holder;
-
     @Inject
     private AjaxResponseRenderer ajaxResponseRenderer;
-
     @InjectComponent(value = "saisiePieceFormZone")
     private Zone saisiePieceFormZone;
-
     @Inject
     private Messages messages;
-
     @InjectComponent
     private Form saisiePieceForm;
-
     @Property
     @Parameter(allowNull = true)
     private TypePiece typeSauvegarder;
-
     @InjectComponent
     private Zone typeFactureOuAvoirZone;
-
     @InjectComponent
     private Zone totalZone;
-
     @InjectComponent
     private Zone articlesZone;
-
     @InjectComponent
     @Property
     private ActionLink importerArticlesDepuisPieceLie;
-
     @Property
     private Boolean modeSaisieType;
 
@@ -134,7 +117,7 @@ public class SaisiePiece {
         } else {
             this.piece = new Piece();
             this.piece.setNumeroPiece(DateMidnight.now().toString("YYYYMMdd")
-                    + "_");
+                                      + "_");
             this.piece.setDate(DateMidnight.now().toDate());
             modeSaisieType = true;
         }
@@ -142,7 +125,7 @@ public class SaisiePiece {
 
     private boolean estEnModeSaisieTypePiecePourModification(Piece piece) {
         TypePiece type = piece.getType();
-        return type.equals(TypePiece.Livraison) || type.equals(TypePiece.Depot);
+        return type != null && (type.equals(TypePiece.Livraison) || type.equals(TypePiece.Depot));
     }
 
     @OnEvent(component = "importerArticlesDepuisPieceLie", value = EventConstants.ACTION)
@@ -199,26 +182,26 @@ public class SaisiePiece {
         for (Piece piecePersiste : pieces) {
             if (!piecePersiste.getId().equals(piece.getId()) && piecePersiste.getNumeroPiece().equals(piece.getNumeroPiece())) {
                 saisiePieceForm.recordError(messages
-                        .get("saisiepiece.message.erreur.type.numeroPieceExistant"));
+                                                    .get("saisiepiece.message.erreur.type.numeroPieceExistant"));
                 break;
             }
         }
         if (this.typeSauvegarder != null) {
             if (!this.piece.getType().equals(TypePiece.Facture)
-                    && this.typeSauvegarder.equals(TypePiece.Facture)
-                    || !this.piece.getType().equals(TypePiece.Avoir)
-                    && this.typeSauvegarder.equals(TypePiece.Avoir)) {
+                && this.typeSauvegarder.equals(TypePiece.Facture)
+                || !this.piece.getType().equals(TypePiece.Avoir)
+                   && this.typeSauvegarder.equals(TypePiece.Avoir)) {
                 saisiePieceForm.recordError(messages
-                        .get("saisiepiece.message.erreur.type.factureavoir"));
+                                                    .get("saisiepiece.message.erreur.type.factureavoir"));
             }
         }
         if (this.typeSauvegarder != null) {
             if (this.piece.getType().equals(TypePiece.Livraison)
-                    && this.typeSauvegarder.equals(TypePiece.Depot)
-                    || this.piece.getType().equals(TypePiece.Depot)
-                    && this.typeSauvegarder.equals(TypePiece.Livraison)) {
+                && this.typeSauvegarder.equals(TypePiece.Depot)
+                || this.piece.getType().equals(TypePiece.Depot)
+                   && this.typeSauvegarder.equals(TypePiece.Livraison)) {
                 saisiePieceForm.recordError(messages
-                        .get("saisiepiece.message.erreur.type.livraisondepot"));
+                                                    .get("saisiepiece.message.erreur.type.livraisondepot"));
             }
         }
         ajaxResponseRenderer.addRender(saisiePieceFormZone);
@@ -349,17 +332,18 @@ public class SaisiePiece {
 
         @Validate("required")
         public Article article;
-
         public Integer order;
 
         // @InjectComponent
         // private Zone articlesZone;
 
         public int compareTo(FieldValue o) {
-            if (this.order == null)
+            if (this.order == null) {
                 return 1;
-            if (o.order == null)
+            }
+            if (o.order == null) {
                 return -1;
+            }
             return this.order.compareTo(o.order);
         }
 
