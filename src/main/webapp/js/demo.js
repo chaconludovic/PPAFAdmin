@@ -10,7 +10,7 @@
 					marginBottom: 25
 				},
 				title: {
-					text: 'Nombre d\'article vendu',
+					text: 'Ventes',
 					x: -20 //center
 				},
 				/*xAxis: {
@@ -30,7 +30,7 @@
 				tooltip: {
 					formatter: function() {
 							return '<b>'+ this.series.name +'</b><br/>'+
-							this.x +': '+ this.y +' articles';
+							this.x +': '+ this.y +' euros';
 					}
 				},
 				legend: {
