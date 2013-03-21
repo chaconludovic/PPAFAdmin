@@ -1,0 +1,69 @@
+<html xmlns:t="http://tapestry.apache.org/schema/tapestry_5_3.xsd" xmlns:p="tapestry:parameter">
+  <style type="text/css">
+    .information_client{
+        display:block;
+        position:absolute;
+        padding: 10px;
+        top:0;
+        right:0;
+        text-align:right;
+        color:red;
+        width:500px;
+        border:1px solid green;
+    }
+    .information_ppaf{
+        display:block;
+        position:absolute;
+        padding: 10px;
+        top:0;
+        left:0;
+        text-align:left;
+        color:black;
+        width:500px;
+        border:1px solid green;
+    }
+    .information_piece{
+        display:block;
+        padding: 50px;
+        position:relative;
+        top:200;
+        left:0;
+        border:1px solid green;
+    }
+    .information_article{
+        display:block;
+        padding: 70px;
+        position:relative;
+        top:300;
+        left:0;
+        border:1px solid green;
+    }
+  </style>
+  <div class="information_client">
+      ${piece.client.nom}<br/>
+      ${piece.client.rue} ${piece.client.codePostal} ${piece.client.ville}<br/>
+  </div>
+  <div class="information_ppaf">
+      PPAF<br/>
+      24 rue Mary Cassatt<br/>
+      60240<br/>
+      Le Mesnil-Théribus<br/>
+      Téléphone: 06 77 134 134<br/>
+  </div>
+  <div class="information_piece">
+      <h3>Type: ${piece.type}</h3><br/>
+      Numério de la pièce: ${piece.numeroPiece}<br/><br/>
+      Date: ${dateDeLaPiece}<br/><br/>
+      <t:if test="piece.commentaire">
+        Note: ${piece.commentaire}<br/><br/>
+      </t:if>
+  </div>
+  <div class="information_article">
+      <t:grid model="model" source="articles" row="article" idTableau="articlesTableau">
+        <p:emptyCGrid><div class="nodata">rien</div></p:emptyCGrid>
+        <p:itemCell>${article.item.designation}</p:itemCell>
+        <p:totalCell>${article.total}</p:totalCell>
+      </t:grid>
+  </div>
+
+</html>

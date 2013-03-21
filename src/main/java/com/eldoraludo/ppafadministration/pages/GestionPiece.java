@@ -50,9 +50,10 @@ public class GestionPiece {
 		model = beanModelSource.createDisplayModel(Piece.class, messages);
 		model.add("client").label("client").sortable(true);
 		model.addEmpty("modifiePiece").label("Modifier une pièce");
+		model.addEmpty("fichePiece").label("Fiche");
 		model.addEmpty("prixremise").label("Prix remise");
 		model.include("date", "client", "numeroPiece", "type", "total",
-				"modifiePiece");
+				"modifiePiece","fichePiece");
 
 	}
 	
